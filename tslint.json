@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-standard"
+  ],
+  "rules": {
+    // "await-promise": [true, "Bluebird", "Promise", "PromiseLike"],
+    "interface-name": false,
+    "max-line-length": false,
+    "member-access": [true, "no-public"],
+    "no-console": [true, "log"]
+  }
+}

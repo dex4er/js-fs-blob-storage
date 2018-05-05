@@ -8,10 +8,6 @@ matrix:
       env:
         - TAP_RCFILE=./.taprc
 
-    - node_js: "9"
-      env:
-        - TAP_RCFILE=./.taprc
-
     - node_js: "8"
       env:
         - TAP_RCFILE=./.taprc

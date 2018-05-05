@@ -5,6 +5,7 @@ const FsBlobStorage = require('../lib/fs-blob-storage')
 const PromisePiping = require('promise-piping')
 
 const SPOOLDIR = process.env.SPOOLDIR || '.'
+const DEBUG = Boolean(process.env.DEBUG)
 
 async function main () {
   const storage = new FsBlobStorage({ path: SPOOLDIR, gzip: true })
@@ -17,25 +18,27 @@ async function main () {
   }
 
   const stream = await storage.createReadStream(key)
-  console.debug('createReadStream returned')
+  if (DEBUG) console.debug('createReadStream returned')
 
   // extra debug trace
-  for (const s of [stream.promiseReadable.stream, stream.stream, process.stdout]) {
-    for (const event of ['close', 'data', 'drain', 'end', 'error', 'finish', 'pipe', 'readable', 'unpipe']) {
-      if (s === process.stdout && ['data', 'readable'].includes(event)) continue
-      const name = s === process.stdout ? 'stdout' : s.constructor.name
-      s.on(event, (arg) => console.debug(`${name} emitted ${event}:`, typeof arg === 'object' ? arg.constructor.name : arg))
+  if (DEBUG) {
+    for (const s of [stream, process.stdout]) {
+      for (const event of ['close', 'data', 'drain', 'end', 'error', 'finish', 'pipe', 'readable', 'unpipe']) {
+        if (s === process.stdout && ['data', 'readable'].includes(event)) continue
+        const name = s === process.stdout ? 'stdout' : s.constructor.name
+        s.on(event, (arg) => console.debug(`${name} emitted ${event}:`, typeof arg === 'object' ? arg.constructor.name : arg))
+      }
     }
   }
 
-  console.info(`Reading from ${SPOOLDIR}/${key} ...`)
+  if (DEBUG) console.info(`Reading from ${SPOOLDIR}/${key} ...`)
 
   const piping = new PromisePiping(stream, process.stdout)
 
   await piping.once('unpipe') // stdout doesn't support 'end' event
   piping.destroy()
-  console.debug('stream ended')
-  console.info('Done.')
+  if (DEBUG) console.debug('stream ended')
+  if (DEBUG) console.info('Done.')
 }
 
 main().catch((err) => console.error(err))

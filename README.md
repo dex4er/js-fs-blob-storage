@@ -17,7 +17,7 @@ npm install fs-blob-storage
 _Typescript:_
 
 ```shell
-npm install -D @types/make-dir @types/mz @types/node
+npm install -D @types/node
 ```
 
 ## Usage
@@ -42,32 +42,21 @@ _Options:_
 
 * `exclusive` if is true then can't create new object if already exists with
   the same key (optional, default: false)
-* `extGz` is an extension for gzipped files (optional, default: ".gz")
-* `gzip` if is true then objects are gzipped (optional, default: false)
 * `path` is a directory path of the storage
 
 _Example:_
 
 ```js
 const storage = new FsBlobStorage({
-  path: '/var/spool/mail'
-})
-```
-
-or
-
-```js
-const storage = new FsBlobStorage({
-  path: './db',
-  exclusive: true,
-  gzip: true
+  path: '/var/spool/mail',
+  exclusive: true
 })
 ```
 
 ### createWriteStream
 
 ```js
-const promiseWritable = await storage.createWriteStream(key, options)
+const writable = await storage.createWriteStream(key, options)
 ```
 
 _Options:_
@@ -78,14 +67,14 @@ _Options:_
    (optional, default: ".part")
 * `encoding` is a encoding for created file (optional, default: "utf8")
 
-Creates a promisified stream for a new object in the storage. Object is stored
-with the file name based on `key` and `ext` and `part`. Throws an error if has
+Creates a writable stream for a new object in the storage. Object is stored with
+the file name based on `key` and `ext` and `part`. Throws an error if has
 occurred and if the file already exists for exclusive mode.
 
 ### createReadStream
 
 ```js
-const promiseReadable = await storage.createWriteStream(key, options)
+const readable = await storage.createWriteStream(key, options)
 ```
 
 _Options:_
@@ -94,8 +83,8 @@ _Options:_
    default: "")
 * `encoding` is a encoding for created file (optional, default: "utf8")
 
-Creates a promisified stream for an existing object in the storage. Throws an
-error if has occurred or the object doesn't exist or its size is zero.
+Creates a readable stream for an existing object in the storage. Throws an error
+if has occurred or the object doesn't exist or its size is zero.
 
 ### commit
 

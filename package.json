@@ -25,10 +25,7 @@
   },
   "dependencies": {
     "make-dir": "^1.2.0",
-    "mz": "^2.7.0",
-    "promise-piping": "^1.0.1",
-    "promise-readable": "^3.1.5",
-    "promise-writable": "^3.1.2"
+    "mz": "^2.7.0"
   },
   "devDependencies": {
     "@types/make-dir": "^1.0.3",
@@ -38,6 +35,9 @@
     "chai-as-promised": "^7.1.1",
     "markdownlint-cli": "^0.8.1",
     "mock-fs": "^4.4.2",
+    "promise-piping": "^1.0.1",
+    "promise-readable": "^3.1.5",
+    "promise-writable": "^3.1.2",
     "snazzy": "^7.0.0",
     "standard": "^10.0.3",
     "tap": "^11.1.0",

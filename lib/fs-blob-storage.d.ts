@@ -1,19 +1,10 @@
 /// <reference types="node" />
 
-import makeDir from 'make-dir'
-import fs from 'mz/fs'
-import path from 'path'
-import { PromiseReadablePiping, PromiseWritablePiping } from 'promise-piping'
-import PromiseReadable from 'promise-readable'
-import PromiseWritable from 'promise-writable'
-import { Duplex, Readable, Writable } from 'stream'
-import zlib from 'zlib'
+import { Readable, Writable } from 'stream'
 
 export interface FsBlobStorageOptions {
   exclusive?: boolean
-  extGz?: string
-  gzip?: zlib.ZlibOptions | boolean
-  path: string
+  path?: string
 }
 
 export interface FsBlobStorageWriteStreamOptions {
@@ -37,15 +28,13 @@ export interface FsBlobStorageRemoveOptions {
 }
 
 export class FsBlobStorage {
-  private readonly extGz: string
-  private readonly gzipOptions?: zlib.ZlibOptions
   private readonly path: string
   private readonly writeFlags: string
 
-  constructor (options: FsBlobStorageOptions)
+  constructor (options?: FsBlobStorageOptions)
 
-  createWriteStream (key: string, options?: FsBlobStorageWriteStreamOptions): Promise<PromiseWritable<Writable> | PromiseWritablePiping>
-  createReadStream (key: string, options?: FsBlobStorageReadStreamOptions): Promise<PromiseReadable<Readable | Duplex> | PromiseReadablePiping>
+  createWriteStream (key: string, options?: FsBlobStorageWriteStreamOptions): Promise<Writable>
+  createReadStream (key: string, options?: FsBlobStorageReadStreamOptions): Promise<Readable>
   commit (key: string, options?: FsBlobStorageCommitOptions): Promise<void>
   remove (key: string, options?: FsBlobStorageRemoveOptions): Promise<void>
 }

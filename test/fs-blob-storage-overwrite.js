@@ -15,35 +15,23 @@ const fs = require('fs')
 const { FsBlobStorage } = require('../lib/fs-blob-storage')
 
 const path = require('path')
-const PromiseReadable = require('promise-readable')
 const PromiseWritable = require('promise-writable')
-const { Readable, Writable } = require('stream')
+const { Writable } = require('stream')
 
 const STORAGEDIR = '/tmp/storage'
 
-Feature('Test FsBlobStorage without options', () => {
+Feature('Test FsBlobStorage overwrite', () => {
   const fakeFilesystem = {
     [STORAGEDIR]: {
-      'commit.part': 'another file content here',
-      'read': 'file content here',
-      'remove': 'more file content here'
+      'exists1.part': 'already exists',
+      'exists2': 'already exists',
+      'exists3.part': 'already exists',
+      'exists3': 'already exists'
     }
   }
 
-  Scenario('Make new empty FsBlobStorage', () => {
-    let storage
-
-    When('new FsBlobStorage object is created', () => {
-      storage = new FsBlobStorage()
-    })
-
-    Then('FsBlobStorage object has correct type', () => {
-      storage.should.be.an.instanceof(FsBlobStorage)
-    })
-  })
-
-  Scenario('FsBlobStorage produces write stream', () => {
-    const testKey = 'write'
+  Scenario('FsBlobStorage produces write stream when part file exists', () => {
+    const testKey = 'exists1'
     const realFilename = path.join(STORAGEDIR, testKey + '.part')
 
     let storage
@@ -87,11 +75,12 @@ Feature('Test FsBlobStorage without options', () => {
     })
   })
 
-  Scenario('FsBlobStorage produces read stream', () => {
-    const testKey = 'read'
+  Scenario('FsBlobStorage produces write stream when object file exists', () => {
+    const testKey = 'exists2'
+    const realFilename = path.join(STORAGEDIR, testKey + '.part')
 
-    let readable
     let storage
+    let writable
 
     Before(() => {
       mockFs(fakeFilesystem)
@@ -102,19 +91,28 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     When('key test is passed in', () => {
-      return storage.createReadStream(testKey)
+      return storage.createWriteStream(testKey)
         .then((value) => {
-          readable = value
+          writable = value
         })
     })
 
-    Then('created Readable should not be null', () => {
-      readable.should.be.an.instanceof(Readable)
+    Then('created Writable should not be null', () => {
+      writable.should.be.an.instanceof(Writable)
     })
 
-    And('Readable should contain the content', () => {
-      const promiseReadable = new PromiseReadable(readable)
-      return promiseReadable.read().should.eventually.equal('file content here')
+    And('.part file should be created', () => {
+      return fs.existsSync(realFilename).should.be.true
+    })
+
+    When('I write to the Writable stream', () => {
+      const promiseWritable = new PromiseWritable(writable)
+      return promiseWritable.writeAll('new content here')
+    })
+
+    Then('new file contains the new content', () => {
+      const content = fs.readFileSync(realFilename, { encoding: 'utf8' })
+      content.should.deep.equal('new content here')
     })
 
     After(() => {
@@ -122,8 +120,8 @@ Feature('Test FsBlobStorage without options', () => {
     })
   })
 
-  Scenario('FsBlobStorage commits file', () => {
-    const testKey = 'commit'
+  Scenario('FsBlobStorage commits file when object file exists', () => {
+    const testKey = 'exists3'
     const realFilename = path.join(STORAGEDIR, testKey + '')
 
     let storage
@@ -142,33 +140,6 @@ Feature('Test FsBlobStorage without options', () => {
 
     Then('rs.part should be renamed to rs', () => {
       return fs.existsSync(realFilename).should.be.true
-    })
-
-    After(() => {
-      mockFs.restore()
-    })
-  })
-
-  Scenario('FsBlobStorage removes file', () => {
-    const testKey = 'remove'
-    const realFilename = path.join(STORAGEDIR, testKey + '')
-
-    let storage
-
-    Before(() => {
-      mockFs(fakeFilesystem)
-    })
-
-    Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
-    })
-
-    When('key remove is passed in', () => {
-      return storage.remove(testKey)
-    })
-
-    Then('remove should be removed', () => {
-      return fs.existsSync(realFilename).should.be.false
     })
 
     After(() => {

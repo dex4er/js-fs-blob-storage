@@ -21,30 +21,19 @@ const { Readable, Writable } = require('stream')
 
 const STORAGEDIR = '/tmp/storage'
 
-Feature('Test FsBlobStorage without options', () => {
+Feature('Test FsBlobStorage with empty part options', () => {
   const fakeFilesystem = {
     [STORAGEDIR]: {
-      'commit.part': 'another file content here',
+      'commit': 'another file content here',
       'read': 'file content here',
       'remove': 'more file content here'
     }
   }
 
-  Scenario('Make new empty FsBlobStorage', () => {
-    let storage
-
-    When('new FsBlobStorage object is created', () => {
-      storage = new FsBlobStorage()
-    })
-
-    Then('FsBlobStorage object has correct type', () => {
-      storage.should.be.an.instanceof(FsBlobStorage)
-    })
-  })
-
   Scenario('FsBlobStorage produces write stream', () => {
     const testKey = 'write'
-    const realFilename = path.join(STORAGEDIR, testKey + '.part')
+    const realFilename = path.join(STORAGEDIR, testKey)
+    const realFilenamePart = realFilename + '.part'
 
     let storage
     let writable
@@ -58,7 +47,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     When('key test is passed in', () => {
-      return storage.createWriteStream(testKey)
+      return storage.createWriteStream(testKey, { part: '' })
         .then((value) => {
           writable = value
         })
@@ -68,8 +57,8 @@ Feature('Test FsBlobStorage without options', () => {
       writable.should.be.an.instanceof(Writable)
     })
 
-    And('.part file should be created', () => {
-      return fs.existsSync(realFilename).should.be.true
+    And('.part file should no be created', () => {
+      return fs.existsSync(realFilenamePart).should.be.false
     })
 
     When('I write to the Writable stream', () => {
@@ -102,7 +91,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     When('key test is passed in', () => {
-      return storage.createReadStream(testKey)
+      return storage.createReadStream(testKey, { part: '' })
         .then((value) => {
           readable = value
         })
@@ -137,10 +126,10 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     When('key rs is passed in', () => {
-      return storage.commit(testKey)
+      return storage.commit(testKey, { part: '' })
     })
 
-    Then('rs.part should be renamed to rs', () => {
+    Then('rs should exists', () => {
       return fs.existsSync(realFilename).should.be.true
     })
 
@@ -164,7 +153,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     When('key remove is passed in', () => {
-      return storage.remove(testKey)
+      return storage.remove(testKey, { part: '' })
     })
 
     Then('remove should be removed', () => {

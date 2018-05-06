@@ -21,30 +21,18 @@ const { Readable, Writable } = require('stream')
 
 const STORAGEDIR = '/tmp/storage'
 
-Feature('Test FsBlobStorage without options', () => {
+Feature('Test FsBlobStorage with ext option', () => {
   const fakeFilesystem = {
     [STORAGEDIR]: {
-      'commit.part': 'another file content here',
-      'read': 'file content here',
-      'remove': 'more file content here'
+      'commit.txt.part': 'another file content here',
+      'read.txt': 'file content here',
+      'remove.txt': 'more file content here'
     }
   }
 
-  Scenario('Make new empty FsBlobStorage', () => {
-    let storage
-
-    When('new FsBlobStorage object is created', () => {
-      storage = new FsBlobStorage()
-    })
-
-    Then('FsBlobStorage object has correct type', () => {
-      storage.should.be.an.instanceof(FsBlobStorage)
-    })
-  })
-
   Scenario('FsBlobStorage produces write stream', () => {
     const testKey = 'write'
-    const realFilename = path.join(STORAGEDIR, testKey + '.part')
+    const realFilename = path.join(STORAGEDIR, testKey + '.txt.part')
 
     let storage
     let writable
@@ -58,7 +46,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     When('key test is passed in', () => {
-      return storage.createWriteStream(testKey)
+      return storage.createWriteStream(testKey, { ext: '.txt' })
         .then((value) => {
           writable = value
         })
@@ -102,7 +90,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     When('key test is passed in', () => {
-      return storage.createReadStream(testKey)
+      return storage.createReadStream(testKey, { ext: '.txt' })
         .then((value) => {
           readable = value
         })
@@ -124,7 +112,7 @@ Feature('Test FsBlobStorage without options', () => {
 
   Scenario('FsBlobStorage commits file', () => {
     const testKey = 'commit'
-    const realFilename = path.join(STORAGEDIR, testKey + '')
+    const realFilename = path.join(STORAGEDIR, testKey + '.txt')
 
     let storage
 
@@ -137,7 +125,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     When('key rs is passed in', () => {
-      return storage.commit(testKey)
+      return storage.commit(testKey, { ext: '.txt' })
     })
 
     Then('rs.part should be renamed to rs', () => {
@@ -151,7 +139,7 @@ Feature('Test FsBlobStorage without options', () => {
 
   Scenario('FsBlobStorage removes file', () => {
     const testKey = 'remove'
-    const realFilename = path.join(STORAGEDIR, testKey + '')
+    const realFilename = path.join(STORAGEDIR, testKey + '.txt')
 
     let storage
 
@@ -164,7 +152,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     When('key remove is passed in', () => {
-      return storage.remove(testKey)
+      return storage.remove(testKey, { ext: '.txt' })
     })
 
     Then('remove should be removed', () => {

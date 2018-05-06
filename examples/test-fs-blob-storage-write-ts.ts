@@ -2,7 +2,10 @@
 
 import FsBlobStorage from '../lib/fs-blob-storage'
 
-import { PromisePiping } from 'promise-piping'
+import pump from 'pump'
+import util from 'util'
+
+const pumpPromise: (...streams: pump.Stream[]) => Promise<void> = util.promisify(pump)
 
 const SPOOLDIR = process.env.SPOOLDIR || '.'
 const DEBUG = Boolean(process.env.DEBUG)
@@ -33,10 +36,8 @@ async function main (): Promise<void> {
 
   if (DEBUG) console.info(`Writing to ${SPOOLDIR}/${key} ...`)
 
-  const piping = new PromisePiping(process.stdin, stream)
+  await pumpPromise(process.stdin, stream)
 
-  await piping.once('close')
-  piping.destroy()
   if (DEBUG) console.debug('stream finished')
 
   await storage.commit(key)

@@ -2,13 +2,16 @@
 
 const FsBlobStorage = require('../lib/fs-blob-storage')
 
-const PromisePiping = require('promise-piping')
+const pump = require('pump')
+const util = require('util')
+
+const pumpPromise = util.promisify(pump)
 
 const SPOOLDIR = process.env.SPOOLDIR || '.'
 const DEBUG = Boolean(process.env.DEBUG)
 
 async function main () {
-  const storage = new FsBlobStorage({ path: SPOOLDIR, gzip: true })
+  const storage = new FsBlobStorage({ path: SPOOLDIR })
 
   const key = process.argv[2]
 
@@ -33,10 +36,8 @@ async function main () {
 
   if (DEBUG) console.info(`Reading from ${SPOOLDIR}/${key} ...`)
 
-  const piping = new PromisePiping(stream, process.stdout)
+  await pumpPromise(stream, process.stdout)
 
-  await piping.once('unpipe') // stdout doesn't support 'end' event
-  piping.destroy()
   if (DEBUG) console.debug('stream ended')
   if (DEBUG) console.info('Done.')
 }

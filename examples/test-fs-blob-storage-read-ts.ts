@@ -2,7 +2,10 @@
 
 import FsBlobStorage from '../lib/fs-blob-storage'
 
-import { PromisePiping } from 'promise-piping'
+import pump from 'pump'
+import util from 'util'
+
+const pumpPromise: (...streams: pump.Stream[]) => Promise<void> = util.promisify(pump)
 
 const SPOOLDIR = process.env.SPOOLDIR || '.'
 const DEBUG = process.env.DEBUG === 'true'
@@ -34,10 +37,8 @@ async function main (): Promise<void> {
 
   if (DEBUG) console.info(`Reading from ${SPOOLDIR}/${key} ...`)
 
-  const piping = new PromisePiping(stream, process.stdout)
+  await pumpPromise(stream, process.stdout)
 
-  await piping.once('unpipe') // stdout doesn't support 'end' event
-  piping.destroy()
   if (DEBUG) console.debug('stream ended')
   if (DEBUG) console.info('Done.')
 }

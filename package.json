@@ -24,7 +24,7 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "make-dir": "^1.2.0",
+    "make-dir": "^1.3.0",
     "util.promisify": "^1.0.0"
   },
   "devDependencies": {

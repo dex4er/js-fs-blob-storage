@@ -29,7 +29,6 @@
   },
   "devDependencies": {
     "@types/make-dir": "^1.0.3",
-    "@types/mz": "^0.0.32",
     "@types/node": "^10.0.6",
     "@types/pump": "^1.0.1",
     "chai": "^4.1.2",

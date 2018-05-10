@@ -17,7 +17,7 @@ npm install fs-blob-storage
 _Typescript:_
 
 ```shell
-npm install -D @types/node
+npm install -D fs-blob-storage @types/node
 ```
 
 ## Usage

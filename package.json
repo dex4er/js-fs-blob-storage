@@ -33,7 +33,7 @@
     "@types/pump": "^1.0.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
-    "markdownlint-cli": "^0.8.1",
+    "markdownlint-cli": "^0.8.2",
     "mock-fs": "^4.5.0",
     "promise-readable": "^3.1.5",
     "promise-writable": "^3.1.2",

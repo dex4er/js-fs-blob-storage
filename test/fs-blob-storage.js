@@ -17,7 +17,6 @@ const { FsBlobStorage } = require('../lib/fs-blob-storage')
 const path = require('path')
 const PromiseReadable = require('promise-readable')
 const PromiseWritable = require('promise-writable')
-const { Readable, Writable } = require('stream')
 
 const STORAGEDIR = '/tmp/storage'
 
@@ -65,7 +64,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Then('created Writable should not be null', () => {
-      writable.should.be.an.instanceof(Writable)
+      writable.should.be.an.instanceof(fs.WriteStream)
     })
 
     And('.part file should be created', () => {
@@ -109,7 +108,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Then('created Readable should not be null', () => {
-      readable.should.be.an.instanceof(Readable)
+      readable.should.be.an.instanceof(fs.ReadStream)
     })
 
     And('Readable should contain the content', () => {

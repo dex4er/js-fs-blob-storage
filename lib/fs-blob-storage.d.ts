@@ -1,6 +1,6 @@
 /// <reference types="node" />
 
-import { Readable, Writable } from 'stream'
+import fs from 'fs'
 
 export interface FsBlobStorageOptions {
   exclusive?: boolean
@@ -33,8 +33,8 @@ export class FsBlobStorage {
 
   constructor (options?: FsBlobStorageOptions)
 
-  createWriteStream (key: string, options?: FsBlobStorageWriteStreamOptions): Promise<Writable>
-  createReadStream (key: string, options?: FsBlobStorageReadStreamOptions): Promise<Readable>
+  createWriteStream (key: string, options?: FsBlobStorageWriteStreamOptions): Promise<fs.WriteStream>
+  createReadStream (key: string, options?: FsBlobStorageReadStreamOptions): Promise<fs.ReadStream>
   commit (key: string, options?: FsBlobStorageCommitOptions): Promise<void>
   remove (key: string, options?: FsBlobStorageRemoveOptions): Promise<void>
 }

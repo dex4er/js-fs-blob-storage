@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.0 2018-05-13
+
+* Typescript: return fs.WriteStream or fs.ReadStream.
+
 ## v0.2.1 2018-05-13
 
 * Bugfix: write to .part file if `part` option is set.

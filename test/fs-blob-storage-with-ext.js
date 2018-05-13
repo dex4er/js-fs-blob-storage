@@ -67,7 +67,7 @@ Feature('Test FsBlobStorage with ext option', () => {
 
     Then('new file contains the new content', () => {
       const content = fs.readFileSync(realFilename, { encoding: 'utf8' })
-      content.should.deep.equal('new content here')
+      content.should.equal('new content here')
     })
 
     After(() => {

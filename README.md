@@ -65,7 +65,7 @@ _Options:_
    default: "")
 * `part` is a extension added to file name which can be later commited
    (optional, default: ".part")
-* `encoding` is a encoding for created file (optional, default: "utf8")
+* `encoding` is a encoding for created file (optional, default: `null`)
 
 Creates a writable stream for a new object in the storage. Object is stored with
 the file name based on `key` and `ext` and `part`. Throws an error if has

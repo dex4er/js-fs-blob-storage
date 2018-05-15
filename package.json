@@ -48,7 +48,8 @@
   },
   "scripts": {
     "pretest": "standard --verbose | snazzy && tsc --noEmit --pretty && tslint -t stylish -p . && echo markdownlint *.md",
-    "test": "tap test/*.js",
+    "test": "npm run test:api",
+    "test:api": "tap test/*.js",
     "test:coverage": "npm test -- --coverage"
   },
   "standard": {

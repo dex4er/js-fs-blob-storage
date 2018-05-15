@@ -103,7 +103,7 @@ Feature('Test FsBlobStorage with empty part options', () => {
 
     And('Readable should contain the content', () => {
       const promiseReadable = new PromiseReadable(readable)
-      return promiseReadable.read().should.eventually.equal('file content here')
+      return promiseReadable.read().should.eventually.deep.equal(Buffer.from('file content here'))
     })
 
     After(() => {

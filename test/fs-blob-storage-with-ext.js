@@ -90,7 +90,7 @@ Feature('Test FsBlobStorage with ext option', () => {
     })
 
     When('key test is passed in', () => {
-      return storage.createReadStream(testKey, { ext: '.txt' })
+      return storage.createReadStream(testKey, { ext: '.txt', encoding: 'utf8' })
         .then((value) => {
           readable = value
         })

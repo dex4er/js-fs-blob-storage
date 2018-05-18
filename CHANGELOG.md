@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.1 2018-05-18
+
+* Uses `stream.pipeline` shim instead `pump` in example scripts.
+
 ## v0.4.0 2018-05-15
 
 * Breaking change: `encoding` is `null` by default and then storage object

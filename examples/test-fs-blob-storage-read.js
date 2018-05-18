@@ -2,10 +2,12 @@
 
 const FsBlobStorage = require('../lib/fs-blob-storage')
 
+require('@dex4er/stream.pipeline/auto')
+
 const stream = require('stream')
 const util = require('util')
 
-const pipelinePromise = util.promisify(stream.pipelinemp)
+const pipelinePromise = util.promisify(stream.pipeline)
 
 const SPOOLDIR = process.env.SPOOLDIR || '.'
 const DEBUG = Boolean(process.env.DEBUG)

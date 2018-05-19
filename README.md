@@ -14,10 +14,10 @@ This module requires ES6 with Node >= 6.
 npm install fs-blob-storage
 ```
 
-_Typescript:_
+_Additionally for Typescript:_
 
 ```shell
-npm install -D fs-blob-storage @types/node
+npm install -D @types/node
 ```
 
 ## Usage

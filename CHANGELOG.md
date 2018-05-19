@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.0 2018-05-19
+
+* New constructor option `defaultExt` and `defaultPart`.
+
 ## v0.4.1 2018-05-18
 
 * Uses `stream.pipeline` shim instead `pump` in example scripts.

@@ -3,6 +3,8 @@
 import fs from 'fs'
 
 export interface FsBlobStorageOptions {
+  defaultExt?: string
+  defaultPart?: string
   exclusive?: boolean
   path?: string
 }

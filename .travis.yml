@@ -3,7 +3,8 @@ sudo: false
 language: node_js
 
 env:
-  - TAP_RCFILE=./.taprc
+  global:
+    - TAP_RCFILE=./.taprc
 
 matrix:
   include:

@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.1 2018-05-24
+
+* Call `close` before `rename` to make storage compatible with Windows.
+
 ## v0.5.0 2018-05-19
 
 * New constructor option `defaultExt` and `defaultPart`.

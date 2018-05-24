@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.2 2018-05-24
+
+* Uses `stream.pipeline-shim` package for examples.
+
 ## v0.5.1 2018-05-24
 
 * Call `close` before `rename` to make storage compatible with Windows.

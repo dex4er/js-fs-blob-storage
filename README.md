@@ -12,6 +12,7 @@ Features:
 * Read and write file streams
 * Partial files
 * Safe, atomic operations
+* Works with any POSIX or NTFS filesystem
 * NFS friendly locking
 
 ## Requirements
@@ -132,6 +133,11 @@ _Options:_
 
 Removes the object from the storage. Throws an error if has occurred or the
 object doesn't exist.
+
+## Bugs
+
+This storage doesn't work correctly on NTFS filesystem mounted in Linux in
+VirtualBox. In this case no partial files should be used.
 
 ## License
 

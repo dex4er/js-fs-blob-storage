@@ -51,14 +51,14 @@ const storage = new FsBlobStorage(options)
 
 _Options:_
 
-* `defaultExt` is a default `ext` argument for methods (optional, default: `""`)
+* `defaultExt` is a default `ext` argument for methods (optional, default: `''`)
 * `defaultPart` is a default `part` argument for methods (optional, default:
-  `".part"`)
+  `'.part'`)
 * `exclusive` if is true then can't create new object if already exists with
   the same key (optional, default: `false`)
 * `fs` is a [File System](https://nodejs.org/api/fs.html) module (optional,
   default: `require('fs')`)
-* `path` is a directory path of the storage (optional, default: `"."`)
+* `path` is a directory path of the storage (optional, default: `'.'`)
 
 _Example:_
 
@@ -97,8 +97,8 @@ const readable = await storage.createWriteStream(key, options)
 _Options:_
 
 * `ext` is a default extension added to file name for the object (optional,
-   default: "")
-* `encoding` is a encoding for created file (optional, default: "utf8")
+   default: '')
+* `encoding` is a encoding for created file (optional, default: 'utf8')
 
 Creates a readable stream for an existing object in the storage. Throws an error
 if has occurred or the object doesn't exist or its size is zero.

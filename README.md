@@ -4,7 +4,7 @@
 [![Build Status](https://secure.travis-ci.org/dex4er/js-fs-blob-storage.svg)](http://travis-ci.org/dex4er/js-fs-blob-storage) [![Coverage Status](https://coveralls.io/repos/github/dex4er/js-fs-blob-storage/badge.svg)](https://coveralls.io/github/dex4er/js-fs-blob-storage) [![npm](https://img.shields.io/npm/v/fs-blob-storage.svg)](https://www.npmjs.com/package/fs-blob-storage)
 <!-- markdownlint-enable MD013 -->
 
-Blob storage on filesystem, with streaming and promises API.
+Blob storage on filesystem, with streams and promises API.
 
 Features:
 

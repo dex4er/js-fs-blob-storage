@@ -12,7 +12,6 @@ const mockFs = require('../mock/mock-fs')
 
 const { FsBlobStorage } = require('../lib/fs-blob-storage')
 
-const fs = require('fs')
 const path = require('path')
 const PromiseReadable = require('promise-readable')
 const PromiseWritable = require('promise-writable')
@@ -77,7 +76,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Then('new file contains the new content', () => {
-      const content = fs.readFileSync(realFilename, { encoding: 'utf8' })
+      const content = mockFs.readFileSync(realFilename, { encoding: 'utf8' })
       content.should.equal('new content here')
     })
   })

@@ -51,14 +51,14 @@ const storage = new FsBlobStorage(options)
 
 _Options:_
 
-* `defaultExt` is a default `ext` argument for methods (optional, default: "")
+* `defaultExt` is a default `ext` argument for methods (optional, default: `""`)
 * `defaultPart` is a default `part` argument for methods (optional, default:
-  ".part")
+  `".part"`)
 * `exclusive` if is true then can't create new object if already exists with
-  the same key (optional, default: false)
+  the same key (optional, default: `false`)
 * `fs` is a [File System](https://nodejs.org/api/fs.html) module (optional,
   default: `require('fs')`)
-* `path` is a directory path of the storage (optional, default: ".")
+* `path` is a directory path of the storage (optional, default: `"."`)
 
 _Example:_
 

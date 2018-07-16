@@ -8,7 +8,7 @@ const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 chai.should()
 
-const mockFs = require('mock-fs')
+const mockFs = require('../mock/mock-fs')
 
 const { FsBlobStorage } = require('../lib/fs-blob-storage')
 
@@ -28,11 +28,11 @@ Feature('Test FsBlobStorage errors', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key test is passed in', () => {
@@ -45,10 +45,6 @@ Feature('Test FsBlobStorage errors', () => {
     Then('error is caught', () => {
       error.should.be.an.instanceof(Error)
         .and.have.property('code').that.is.equal('ENOENT')
-    })
-
-    After(() => {
-      mockFs.restore()
     })
   })
 
@@ -59,11 +55,11 @@ Feature('Test FsBlobStorage errors', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key test is passed in', () => {
@@ -77,10 +73,6 @@ Feature('Test FsBlobStorage errors', () => {
       error.should.be.an.instanceof(Error)
         .and.have.property('code').that.is.equal('ENOENT')
     })
-
-    After(() => {
-      mockFs.restore()
-    })
   })
 
   Scenario('FsBlobStorage tries to commit file when part file does not exist', () => {
@@ -90,11 +82,11 @@ Feature('Test FsBlobStorage errors', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key test is passed in', () => {
@@ -108,10 +100,6 @@ Feature('Test FsBlobStorage errors', () => {
       error.should.be.an.instanceof(Error)
         .and.have.property('code').that.is.equal('ENOENT')
     })
-
-    After(() => {
-      mockFs.restore()
-    })
   })
 
   Scenario('FsBlobStorage tries to remove file when object does not exist', () => {
@@ -121,11 +109,11 @@ Feature('Test FsBlobStorage errors', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key remove is passed in', () => {
@@ -138,10 +126,6 @@ Feature('Test FsBlobStorage errors', () => {
     Then('error is caught', () => {
       error.should.be.an.instanceof(Error)
         .and.have.property('code').that.is.equal('ENOENT')
-    })
-
-    After(() => {
-      mockFs.restore()
     })
   })
 })

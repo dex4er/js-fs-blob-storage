@@ -1,8 +1,10 @@
 # Changelog
 
-## v0.5.3 2018-07-15
+## v0.6.0 2018-07-16
 
-* Tweak jsdoc
+* New option `fs` with File System module.
+* Tests don't use `mock-fs` package anymore.
+* Tweaked jsdoc.
 
 ## v0.5.2 2018-05-24
 

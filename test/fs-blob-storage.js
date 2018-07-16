@@ -8,15 +8,15 @@ const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 chai.should()
 
-const mockFs = require('mock-fs')
-
-const fs = require('fs')
+const mockFs = require('../mock/mock-fs')
 
 const { FsBlobStorage } = require('../lib/fs-blob-storage')
 
+const fs = require('fs')
 const path = require('path')
 const PromiseReadable = require('promise-readable')
 const PromiseWritable = require('promise-writable')
+const { Readable, Writable } = require('stream')
 
 const STORAGEDIR = '/tmp/storage'
 
@@ -49,11 +49,11 @@ Feature('Test FsBlobStorage without options', () => {
     let writable
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key test is passed in', () => {
@@ -64,11 +64,11 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Then('created Writable should not be null', () => {
-      writable.should.be.an.instanceof(fs.WriteStream)
+      writable.should.be.an.instanceof(Writable)
     })
 
     And('.part file should be created', () => {
-      return fs.existsSync(realFilename).should.be.true
+      return mockFs.existsSync(realFilename).should.be.true
     })
 
     When('I write to the Writable stream', () => {
@@ -80,10 +80,6 @@ Feature('Test FsBlobStorage without options', () => {
       const content = fs.readFileSync(realFilename, { encoding: 'utf8' })
       content.should.equal('new content here')
     })
-
-    After(() => {
-      mockFs.restore()
-    })
   })
 
   Scenario('FsBlobStorage produces read stream', () => {
@@ -93,11 +89,11 @@ Feature('Test FsBlobStorage without options', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key test is passed in', () => {
@@ -108,16 +104,12 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Then('created Readable should not be null', () => {
-      readable.should.be.an.instanceof(fs.ReadStream)
+      readable.should.be.an.instanceof(Readable)
     })
 
     And('Readable should contain the content', () => {
       const promiseReadable = new PromiseReadable(readable)
       return promiseReadable.read().should.eventually.deep.equal(Buffer.from('file content here'))
-    })
-
-    After(() => {
-      mockFs.restore()
     })
   })
 
@@ -128,11 +120,11 @@ Feature('Test FsBlobStorage without options', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key rs is passed in', () => {
@@ -140,11 +132,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Then('rs.part should be renamed to rs', () => {
-      return fs.existsSync(realFilename).should.be.true
-    })
-
-    After(() => {
-      mockFs.restore()
+      return mockFs.existsSync(realFilename).should.be.true
     })
   })
 
@@ -155,11 +143,11 @@ Feature('Test FsBlobStorage without options', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key remove is passed in', () => {
@@ -167,11 +155,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Then('remove should be removed', () => {
-      return fs.existsSync(realFilename).should.be.false
-    })
-
-    After(() => {
-      mockFs.restore()
+      return mockFs.existsSync(realFilename).should.be.false
     })
   })
 })

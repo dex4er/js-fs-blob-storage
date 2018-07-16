@@ -8,9 +8,7 @@ const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 chai.should()
 
-const mockFs = require('mock-fs')
-
-const fs = require('fs')
+const mockFs = require('../mock/mock-fs')
 
 const { FsBlobStorage } = require('../lib/fs-blob-storage')
 
@@ -38,11 +36,11 @@ Feature('Test FsBlobStorage with defaultPart option', () => {
     let writable
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, defaultPart: '.lock' })
+      storage = new FsBlobStorage({ path: STORAGEDIR, defaultPart: '.lock', fs: mockFs })
     })
 
     When('key test is passed in', () => {
@@ -57,7 +55,7 @@ Feature('Test FsBlobStorage with defaultPart option', () => {
     })
 
     And('.part file should be created', () => {
-      return fs.existsSync(realFilename).should.be.true
+      return mockFs.existsSync(realFilename).should.be.true
     })
 
     When('I write to the Writable stream', () => {
@@ -66,12 +64,8 @@ Feature('Test FsBlobStorage with defaultPart option', () => {
     })
 
     Then('new file contains the new content', () => {
-      const content = fs.readFileSync(realFilename, { encoding: 'utf8' })
+      const content = mockFs.readFileSync(realFilename, { encoding: 'utf8' })
       content.should.equal('new content here')
-    })
-
-    After(() => {
-      mockFs.restore()
     })
   })
 
@@ -82,11 +76,11 @@ Feature('Test FsBlobStorage with defaultPart option', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key test is passed in', () => {
@@ -104,10 +98,6 @@ Feature('Test FsBlobStorage with defaultPart option', () => {
       const promiseReadable = new PromiseReadable(readable)
       return promiseReadable.read().should.eventually.equal('file content here')
     })
-
-    After(() => {
-      mockFs.restore()
-    })
   })
 
   Scenario('FsBlobStorage commits file', () => {
@@ -117,11 +107,11 @@ Feature('Test FsBlobStorage with defaultPart option', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, defaultPart: '.lock' })
+      storage = new FsBlobStorage({ path: STORAGEDIR, defaultPart: '.lock', fs: mockFs })
     })
 
     When('key rs is passed in', () => {
@@ -129,11 +119,7 @@ Feature('Test FsBlobStorage with defaultPart option', () => {
     })
 
     Then('rs.part should be renamed to rs', () => {
-      return fs.existsSync(realFilename).should.be.true
-    })
-
-    After(() => {
-      mockFs.restore()
+      return mockFs.existsSync(realFilename).should.be.true
     })
   })
 
@@ -144,11 +130,11 @@ Feature('Test FsBlobStorage with defaultPart option', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key remove is passed in', () => {
@@ -156,11 +142,7 @@ Feature('Test FsBlobStorage with defaultPart option', () => {
     })
 
     Then('remove should be removed', () => {
-      return fs.existsSync(realFilename).should.be.false
-    })
-
-    After(() => {
-      mockFs.restore()
+      return mockFs.existsSync(realFilename).should.be.false
     })
   })
 })

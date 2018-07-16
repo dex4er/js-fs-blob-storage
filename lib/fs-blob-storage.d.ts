@@ -7,6 +7,7 @@ export interface FsBlobStorageOptions {
   defaultPart?: string
   exclusive?: boolean
   path?: string
+  fs?: typeof fs
 }
 
 export interface FsBlobStorageWriteStreamOptions {
@@ -30,9 +31,6 @@ export interface FsBlobStorageRemoveOptions {
 }
 
 export class FsBlobStorage {
-  private readonly path: string
-  private readonly writeFlags: string
-
   constructor (options?: FsBlobStorageOptions)
 
   createWriteStream (key: string, options?: FsBlobStorageWriteStreamOptions): Promise<fs.WriteStream>

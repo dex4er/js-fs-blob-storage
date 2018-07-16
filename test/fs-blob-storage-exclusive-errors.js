@@ -8,7 +8,7 @@ const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 chai.should()
 
-const mockFs = require('mock-fs')
+const mockFs = require('../mock/mock-fs')
 
 const { FsBlobStorage } = require('../lib/fs-blob-storage')
 
@@ -29,11 +29,11 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true })
+      storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true, fs: mockFs })
     })
 
     When('key test is passed in', () => {
@@ -46,10 +46,6 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
     Then('error is caught', () => {
       error.should.be.an.instanceof(Error)
         .and.have.property('code').that.is.equal('EEXIST')
-    })
-
-    After(() => {
-      mockFs.restore()
     })
   })
 
@@ -60,11 +56,11 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true })
+      storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true, fs: mockFs })
     })
 
     When('key test is passed in', () => {
@@ -77,10 +73,6 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
     Then('error is caught', () => {
       error.should.be.an.instanceof(Error)
         .and.have.property('code').that.is.equal('EEXIST')
-    })
-
-    After(() => {
-      mockFs.restore()
     })
   })
 })

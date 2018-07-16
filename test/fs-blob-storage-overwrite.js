@@ -8,9 +8,7 @@ const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 chai.should()
 
-const mockFs = require('mock-fs')
-
-const fs = require('fs')
+const mockFs = require('../mock/mock-fs')
 
 const { FsBlobStorage } = require('../lib/fs-blob-storage')
 
@@ -38,11 +36,11 @@ Feature('Test FsBlobStorage overwrite', () => {
     let writable
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key test is passed in', () => {
@@ -57,7 +55,7 @@ Feature('Test FsBlobStorage overwrite', () => {
     })
 
     And('.part file should be created', () => {
-      return fs.existsSync(realFilename).should.be.true
+      return mockFs.existsSync(realFilename).should.be.true
     })
 
     When('I write to the Writable stream', () => {
@@ -66,12 +64,8 @@ Feature('Test FsBlobStorage overwrite', () => {
     })
 
     Then('new file contains the new content', () => {
-      const content = fs.readFileSync(realFilename, { encoding: 'utf8' })
+      const content = mockFs.readFileSync(realFilename, { encoding: 'utf8' })
       content.should.equal('new content here')
-    })
-
-    After(() => {
-      mockFs.restore()
     })
   })
 
@@ -83,11 +77,11 @@ Feature('Test FsBlobStorage overwrite', () => {
     let writable
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key test is passed in', () => {
@@ -102,7 +96,7 @@ Feature('Test FsBlobStorage overwrite', () => {
     })
 
     And('.part file should be created', () => {
-      return fs.existsSync(realFilename).should.be.true
+      return mockFs.existsSync(realFilename).should.be.true
     })
 
     When('I write to the Writable stream', () => {
@@ -111,12 +105,8 @@ Feature('Test FsBlobStorage overwrite', () => {
     })
 
     Then('new file contains the new content', () => {
-      const content = fs.readFileSync(realFilename, { encoding: 'utf8' })
+      const content = mockFs.readFileSync(realFilename, { encoding: 'utf8' })
       content.should.equal('new content here')
-    })
-
-    After(() => {
-      mockFs.restore()
     })
   })
 
@@ -127,11 +117,11 @@ Feature('Test FsBlobStorage overwrite', () => {
     let storage
 
     Before(() => {
-      mockFs(fakeFilesystem)
+      mockFs.init(fakeFilesystem)
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
     })
 
     When('key rs is passed in', () => {
@@ -139,11 +129,7 @@ Feature('Test FsBlobStorage overwrite', () => {
     })
 
     Then('rs.part should be renamed to rs', () => {
-      return fs.existsSync(realFilename).should.be.true
-    })
-
-    After(() => {
-      mockFs.restore()
+      return mockFs.existsSync(realFilename).should.be.true
     })
   })
 })

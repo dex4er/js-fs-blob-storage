@@ -53,7 +53,7 @@
     "pretest": "eslint . && tsc --noEmit --pretty && tslint -t stylish -p . && echo markdownlint *.md",
     "test": "npm run test:api",
     "test:api": "tap test/*.js",
-    "test:coverage": "npm test -- --coverage"
+    "test:coverage": "npm run test:api -- --coverage"
   },
   "standard": {
     "globals": [

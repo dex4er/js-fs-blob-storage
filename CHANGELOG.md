@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.1 2018-07-16
+
+* Pack only important files.
+
 ## v0.6.0 2018-07-16
 
 * New option `fs` with File System module.

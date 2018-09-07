@@ -33,7 +33,7 @@ Feature('Test FsBlobStorage with ext option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs as any })
     })
 
     When('key test is passed in', async () => {
@@ -70,7 +70,7 @@ Feature('Test FsBlobStorage with ext option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs as any })
     })
 
     When('key test is passed in', async () => {
@@ -98,7 +98,7 @@ Feature('Test FsBlobStorage with ext option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs as any })
     })
 
     When('key rs is passed in', async () => {
@@ -121,7 +121,7 @@ Feature('Test FsBlobStorage with ext option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs as any })
     })
 
     When('key remove is passed in', async () => {

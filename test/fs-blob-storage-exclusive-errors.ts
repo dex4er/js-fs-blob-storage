@@ -25,7 +25,7 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true, fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true, fs: mockFs as any })
     })
 
     When('key test is passed in', async () => {
@@ -53,7 +53,7 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true, fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true, fs: mockFs as any })
     })
 
     When('key test is passed in', async () => {

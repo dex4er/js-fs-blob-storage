@@ -45,7 +45,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
     })
 
     When('key test is passed in', async () => {
@@ -82,7 +82,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
     })
 
     When('key test is passed in', async () => {
@@ -110,7 +110,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
     })
 
     When('key rs is passed in', async () => {
@@ -133,7 +133,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
     })
 
     When('key remove is passed in', async () => {

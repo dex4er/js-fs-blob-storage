@@ -232,6 +232,6 @@ const mockFs = {
   rename,
   stat,
   unlink
-} as any
+}
 
 export default mockFs

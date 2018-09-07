@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
-    "declaration": true,
     "esModuleInterop": true,
-    "importHelpers": true,
     "lib": [
       "es6"
     ],
@@ -11,16 +9,10 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "./lib",
     "target": "es6",
     "strict": true,
     "typeRoots": [
-      "node_modules/@types"
+      "../node_modules/@types"
     ]
-  },
-  "exclude": [
-    "./examples/**/*",
-    "./lib/**/*",
-    "./test/**/*"
-  ]
+  }
 }

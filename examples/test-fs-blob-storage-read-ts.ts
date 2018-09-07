@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 
-import FsBlobStorage from '../lib/fs-blob-storage'
+import FsBlobStorage from '../src/fs-blob-storage'
 
 import 'stream.pipeline-shim/auto'
 

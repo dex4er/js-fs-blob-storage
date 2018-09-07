@@ -1,16 +1,8 @@
-'use strict'
+import { Before, Feature, Given, Scenario, Then, When } from './lib/steps'
 
-const t = require('tap')
-require('tap-given')(t)
+import FsBlobStorage from '../src/fs-blob-storage'
 
-const chai = require('chai')
-const chaiAsPromised = require('chai-as-promised')
-chai.use(chaiAsPromised)
-chai.should()
-
-const mockFs = require('../mock/mock-fs')
-
-const { FsBlobStorage } = require('../lib/fs-blob-storage')
+import mockFs from './lib/mock-fs'
 
 const STORAGEDIR = '/tmp/storage'
 
@@ -25,8 +17,8 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
   Scenario('FsBlobStorage tries to produce write stream when part file exists', () => {
     const testKey = 'exists1'
 
-    let error
-    let storage
+    let error: Error
+    let storage: FsBlobStorage
 
     Before(() => {
       mockFs.init(fakeFilesystem)
@@ -36,11 +28,12 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
       storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true, fs: mockFs })
     })
 
-    When('key test is passed in', () => {
-      return storage.createWriteStream(testKey)
-        .catch((err) => {
-          error = err
-        })
+    When('key test is passed in', async () => {
+      try {
+        await storage.createWriteStream(testKey)
+      } catch (e) {
+        error = e
+      }
     })
 
     Then('error is caught', () => {
@@ -52,8 +45,8 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
   Scenario('FsBlobStorage tries to produce write stream when object file exists', () => {
     const testKey = 'exists2'
 
-    let error
-    let storage
+    let error: Error
+    let storage: FsBlobStorage
 
     Before(() => {
       mockFs.init(fakeFilesystem)
@@ -63,11 +56,12 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
       storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true, fs: mockFs })
     })
 
-    When('key test is passed in', () => {
-      return storage.createWriteStream(testKey)
-        .catch((err) => {
-          error = err
-        })
+    When('key test is passed in', async () => {
+      try {
+        await storage.createWriteStream(testKey)
+      } catch (e) {
+        error = e
+      }
     })
 
     Then('error is caught', () => {

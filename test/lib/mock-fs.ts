@@ -178,11 +178,14 @@ export function rename (src: string, dest: string, callback: (err: NodeJS.ErrnoE
 export function stat (filepath: string, callback: (err: NodeJS.ErrnoException, stats: fs.Stats) => void) {
   TRACE('stat', filepath)
   const { dir, base } = path.parse(filepath)
-  let mode
+  let mode: number
+  let size: number
   if (fakeFilesystem[filepath]) {
     mode = 0o40755
+    size = 1024
   } else if (fakeFilesystem[dir] && fakeFilesystem[dir][base]) {
     mode = 0o00644
+    size = fakeFilesystem[dir][base].length
   } else {
     return process.nextTick(callback, Object.assign(new Error('no such file or directory: ' + filepath), { errno: -2, code: 'ENOENT', syscall: 'stat', path: filepath }))
   }
@@ -197,7 +200,7 @@ export function stat (filepath: string, callback: (err: NodeJS.ErrnoException, s
     rdev: 0,
     blksize: 0,
     ino: 1,
-    size: 1024,
+    size,
     blocks: 0,
     atimeMs: timeMs,
     mtimeMs: timeMs,

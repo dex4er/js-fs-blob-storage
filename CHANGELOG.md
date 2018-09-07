@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.1.0 2018-09-07
+
+* The `defaultExt` and `defaultPart` options has need renamed to `ext` and
+  `part`.
+
 ## v1.0.0 2018-09-07
 
 * Rewritten in Typescript.

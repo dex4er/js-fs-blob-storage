@@ -12,7 +12,7 @@ import mockFs from './lib/mock-fs'
 
 const STORAGEDIR = '/tmp/storage'
 
-Feature('Test FsBlobStorage with defaultExt option', () => {
+Feature('Test FsBlobStorage with ext option', () => {
   const fakeFilesystem = {
     [STORAGEDIR]: {
       'commit.txt.part': 'another file content here',
@@ -33,7 +33,7 @@ Feature('Test FsBlobStorage with defaultExt option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, defaultExt: '.txt', fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs })
     })
 
     When('key test is passed in', async () => {
@@ -70,7 +70,7 @@ Feature('Test FsBlobStorage with defaultExt option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, defaultExt: '.txt', fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs })
     })
 
     When('key test is passed in', async () => {
@@ -98,7 +98,7 @@ Feature('Test FsBlobStorage with defaultExt option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, defaultExt: '.txt', fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs })
     })
 
     When('key rs is passed in', async () => {
@@ -121,7 +121,7 @@ Feature('Test FsBlobStorage with defaultExt option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, defaultExt: '.txt', fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, ext: '.txt', fs: mockFs })
     })
 
     When('key remove is passed in', async () => {

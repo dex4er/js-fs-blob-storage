@@ -9,8 +9,8 @@ import util from 'util'
 const promisify = require('util.promisify') as typeof util.promisify
 
 export interface FsBlobStorageOptions {
-  defaultExt?: string
-  defaultPart?: string
+  ext?: string
+  part?: string
   exclusive?: boolean
   path?: string
   fs?: typeof fs
@@ -48,8 +48,8 @@ const DEFAULT_EXT = ''
 const DEFAULT_PART = '.part'
 
 export class FsBlobStorage {
-  protected defaultExt: string
-  protected defaultPart: string
+  protected ext: string
+  protected part: string
   protected writeFlags: string
   protected fs: typeof fs
   protected path: string
@@ -57,8 +57,8 @@ export class FsBlobStorage {
   protected fsPromises: FsPromises
 
   constructor (options: FsBlobStorageOptions = {}) {
-    this.defaultExt = options.defaultExt !== undefined ? options.defaultExt : DEFAULT_EXT
-    this.defaultPart = options.defaultPart !== undefined ? options.defaultPart : DEFAULT_PART
+    this.ext = options.ext !== undefined ? options.ext : DEFAULT_EXT
+    this.part = options.part !== undefined ? options.part : DEFAULT_PART
     this.writeFlags = options.exclusive ? 'wx' : 'w'
     this.fs = options.fs || fs
     this.path = options.path || '.'
@@ -70,7 +70,7 @@ export class FsBlobStorage {
   }
 
   async createWriteStream (key: string, options: FsBlobStorageWriteStreamOptions = {}): Promise<fs.WriteStream> {
-    const { ext = this.defaultExt, part = this.defaultPart, encoding } = options
+    const { ext = this.ext, part = this.part, encoding } = options
     const filepath = path.join(this.path, key + ext)
     const dirpath = path.dirname(filepath)
 
@@ -95,7 +95,7 @@ export class FsBlobStorage {
   }
 
   async createReadStream (key: string, options: FsBlobStorageReadStreamOptions = {}): Promise<fs.ReadStream> {
-    const { ext = this.defaultExt, encoding } = options
+    const { ext = this.ext, encoding } = options
     const filepath = path.join(this.path, key + ext)
 
     const fd = await this.fsPromises.open(filepath, 'r')
@@ -110,7 +110,7 @@ export class FsBlobStorage {
   }
 
   async commit (key: string, options: FsBlobStorageCommitOptions = {}): Promise<void> {
-    const { ext = this.defaultExt, part = this.defaultPart } = options
+    const { ext = this.ext, part = this.part } = options
     if (part) {
       const filepath = path.join(this.path, key + ext)
       return this.fsPromises.rename(filepath + part, filepath)
@@ -118,7 +118,7 @@ export class FsBlobStorage {
   }
 
   async remove (key: string, options: FsBlobStorageRemoveOptions = {}): Promise<void> {
-    const { ext = this.defaultExt } = options
+    const { ext = this.ext } = options
     const filepath = path.join(this.path, key + ext)
     return this.fsPromises.unlink(filepath)
   }

@@ -63,8 +63,8 @@ const storage = new FsBlobStorage(options)
 
 _Options:_
 
-* `defaultExt` is a default `ext` argument for methods (optional, default: `''`)
-* `defaultPart` is a default `part` argument for methods (optional, default:
+* `ext` is a default `ext` argument for methods (optional, default: `''`)
+* `part` is a default `part` argument for methods (optional, default:
   `'.part'`)
 * `exclusive` if is true then can't create new object if already exists with
   the same key (optional, default: `false`)
@@ -76,7 +76,7 @@ _Example:_
 
 ```js
 const storage = new FsBlobStorage({
-  defaultPart: '.lock',
+  part: '.lock',
   path: '/var/spool/mail',
   exclusive: true
 })
@@ -91,9 +91,9 @@ const writable = await storage.createWriteStream(key, options)
 _Options:_
 
 * `ext` is a default extension added to file name for the object (optional,
-   default: `this.defaultExt`)
+   default: `this.ext`)
 * `part` is a extension added to file name which can be later commited
-   (optional, default: `this.defaultPart`)
+   (optional, default: `this.part`)
 * `encoding` is a encoding for created file (optional, default: `null`)
 
 Creates a writable stream for a new object in the storage. Object is stored with
@@ -124,9 +124,9 @@ await storage.commit(key, options)
 _Options:_
 
 * `ext` is a default extension added to file name for the object (optional,
-   default: `this.defaultExt`)
+   default: `this.ext`)
 * `part` is a extension added to file name which can be later commited
-   (optional, default: `this.defaultPart`)
+   (optional, default: `this.part`)
 
 Commits the object in the storage. It means that file name for the object is
 renamed and the additional extension for partial objects is removed. Throws an
@@ -141,7 +141,7 @@ await storage.remove(key, options)
 _Options:_
 
 * `ext` is a default extension added to file name for the object (optional,
-   default: `this.defaultExt`)
+   default: `this.ext`)
 
 Removes the object from the storage. Throws an error if has occurred or the
 object doesn't exist.

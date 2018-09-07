@@ -12,7 +12,7 @@ import mockFs from './lib/mock-fs'
 
 const STORAGEDIR = '/tmp/storage'
 
-Feature('Test FsBlobStorage with defaultPart option', () => {
+Feature('Test FsBlobStorage with part option', () => {
   const fakeFilesystem = {
     [STORAGEDIR]: {
       'commit.txt.lock': 'another file content here',
@@ -33,7 +33,7 @@ Feature('Test FsBlobStorage with defaultPart option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, defaultPart: '.lock', fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, part: '.lock', fs: mockFs })
     })
 
     When('key test is passed in', async () => {
@@ -98,7 +98,7 @@ Feature('Test FsBlobStorage with defaultPart option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, defaultPart: '.lock', fs: mockFs })
+      storage = new FsBlobStorage({ path: STORAGEDIR, part: '.lock', fs: mockFs })
     })
 
     When('key rs is passed in', async () => {

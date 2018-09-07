@@ -34,7 +34,7 @@ npm install -D @types/node
 ## Usage
 
 ```js
-const FsBlobStorage = require('fs-blob-storage')
+const { FsBlobStorage } = require('fs-blob-storage')
 ```
 
 _Typescript:_

@@ -1,5 +1,7 @@
 #!/usr/bin/env ts-node
 
+/// <reference lib="es2017" />
+
 import FsBlobStorage from '../src/fs-blob-storage'
 
 import 'stream.pipeline-shim/auto'

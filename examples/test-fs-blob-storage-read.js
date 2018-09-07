@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const FsBlobStorage = require('../lib/fs-blob-storage')
+const { FsBlobStorage } = require('../lib/fs-blob-storage')
 
 require('stream.pipeline-shim/auto')
 

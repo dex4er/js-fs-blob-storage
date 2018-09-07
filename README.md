@@ -43,6 +43,18 @@ _Typescript:_
 import FsBlobStorage from 'fs-blob-storage'
 ```
 
+Transpiling this module with own settings in `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "fs-blob-storage": ["node_modules/fs-blob-storage/src/fs-blob-storage"]
+    }
+  }
+}
+```
+
 ### constructor
 
 ```js

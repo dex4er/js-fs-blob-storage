@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.2.0 2018-09-07
+
+* `DEFAULT_EXT` and `DEFAULT_PART` are static readonly properties of
+  `FsBlobStorage` class.
+
 ## v1.1.0 2018-09-07
 
 * The `defaultExt` and `defaultPart` options has need renamed to `ext` and

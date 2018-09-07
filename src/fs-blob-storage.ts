@@ -44,10 +44,10 @@ interface FsPromises {
   unlink: typeof fs.unlink.__promisify__
 }
 
-const DEFAULT_EXT = ''
-const DEFAULT_PART = '.part'
-
 export class FsBlobStorage {
+  static readonly DEFAULT_EXT = ''
+  static readonly DEFAULT_PART = '.part'
+
   protected ext: string
   protected part: string
   protected writeFlags: string
@@ -57,8 +57,8 @@ export class FsBlobStorage {
   protected fsPromises: FsPromises
 
   constructor (options: FsBlobStorageOptions = {}) {
-    this.ext = options.ext !== undefined ? options.ext : DEFAULT_EXT
-    this.part = options.part !== undefined ? options.part : DEFAULT_PART
+    this.ext = options.ext !== undefined ? options.ext : FsBlobStorage.DEFAULT_EXT
+    this.part = options.part !== undefined ? options.part : FsBlobStorage.DEFAULT_PART
     this.writeFlags = options.exclusive ? 'wx' : 'w'
     this.fs = options.fs || fs
     this.path = options.path || '.'

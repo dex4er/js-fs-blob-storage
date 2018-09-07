@@ -55,6 +55,14 @@ Transpiling this module with own settings in `tsconfig.json`:
 }
 ```
 
+### DEFAULT_EXT
+
+The default `ext` option is `''`
+
+### DEFAULT_PART
+
+The default `part` option is `'.part'`
+
 ### constructor
 
 ```js
@@ -63,9 +71,10 @@ const storage = new FsBlobStorage(options)
 
 _Options:_
 
-* `ext` is a default `ext` argument for methods (optional, default: `''`)
+* `ext` is a default `ext` argument for methods (optional, default:
+  `DEFAULT_EXT`)
 * `part` is a default `part` argument for methods (optional, default:
-  `'.part'`)
+  `DEFAULT_PART`)
 * `exclusive` if is true then can't create new object if already exists with
   the same key (optional, default: `false`)
 * `fs` is a [File System](https://nodejs.org/api/fs.html) module (optional,

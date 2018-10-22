@@ -2,6 +2,7 @@
 // tslint:disable:typedef
 
 import fs from 'fs'
+import makeDir from 'make-dir'
 import path from 'path'
 import { Readable, Writable } from 'stream'
 
@@ -109,21 +110,34 @@ export function init (newFakeFilesystem: FakeFilesystem): void {
   fds = []
 }
 
-export function mkdir (dirpath: string, mode: number, callback: (err: NodeJS.ErrnoException) => void): void
-export function mkdir (dirpath: string, callback: (err: NodeJS.ErrnoException) => void): void
+export function mkdir (path: string, mode: number | string | fs.MakeDirectoryOptions | undefined | null, callback: (err?: NodeJS.ErrnoException) => void): void
+export function mkdir (path: string, callback: (err?: NodeJS.ErrnoException) => void): void
 
-export function mkdir (dirpath: string, mode: number | ((err: NodeJS.ErrnoException) => void), callback?: (err: NodeJS.ErrnoException) => void): void {
-  TRACE('mkdir', dirpath, mode)
-  if (typeof mode === 'function') {
-    callback = mode
-    mode = 0o777
+export function mkdir (dirpath: string, options: number | string | fs.MakeDirectoryOptions | undefined | null | ((err?: NodeJS.ErrnoException) => void), callback?: (err?: NodeJS.ErrnoException) => void): void {
+  TRACE('mkdir', dirpath, options)
+  let mode = 0o777
+  let recursive = false
+  if (typeof options === 'function') {
+    callback = options
+  } else if (typeof options === 'object') {
+    const makeDirectoryOptions = options as fs.MakeDirectoryOptions
+    mode = makeDirectoryOptions.mode || 0o777
+    recursive = makeDirectoryOptions.recursive || false
   }
-  if (callback) {
-    if (fakeFilesystem[dirpath]) {
-      return process.nextTick(callback, Object.assign(new Error('file already exists: ' + dirpath), { errno: -17, code: 'EEXIST', syscall: 'mkdir', path: dirpath }))
+  if (recursive) {
+    makeDir(dirpath, { mode, fs: mockFs as any }).then(() => {
+      if (callback) callback()
+    }).catch((err) => {
+      if (callback) callback(err)
+    })
+  } else {
+    if (callback) {
+      if (fakeFilesystem[dirpath]) {
+        return process.nextTick(callback, Object.assign(new Error('file already exists: ' + dirpath), { errno: -17, code: 'EEXIST', syscall: 'mkdir', path: dirpath }))
+      }
+      fakeFilesystem[dirpath] = {}
+      process.nextTick(callback, null)
     }
-    fakeFilesystem[dirpath] = {}
-    process.nextTick(callback, null)
   }
 }
 

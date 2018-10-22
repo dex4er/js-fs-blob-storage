@@ -1,7 +1,7 @@
 /// <reference types="node" />
 
 import fs from 'fs'
-import makeDir from 'make-dir'
+import mkdir from 'fs.mkdir-shim'
 import path from 'path'
 import util from 'util'
 
@@ -38,6 +38,7 @@ export interface FsBlobStorageRemoveOptions {
 
 interface FsPromises {
   close: typeof fs.close.__promisify__,
+  mkdir: typeof fs.mkdir.__promisify__,
   open: typeof fs.open.__promisify__,
   rename: typeof fs.rename.__promisify__,
   stat: typeof fs.stat.__promisify__,
@@ -64,6 +65,7 @@ export class FsBlobStorage {
     this.path = options.path || '.'
 
     this.fsPromises = {} as FsPromises
+    this.fsPromises.mkdir = promisify(mkdir)
     for (const method of ['close', 'open', 'rename', 'stat', 'unlink'] as Array<keyof FsPromises>) {
       this.fsPromises[method] = promisify(this.fs[method]) as any
     }
@@ -74,7 +76,7 @@ export class FsBlobStorage {
     const filepath = path.join(this.path, key + ext)
     const dirpath = path.dirname(filepath)
 
-    await makeDir(dirpath, { fs: this.fs })
+    await this.fsPromises.mkdir(dirpath, { recursive: true })
 
     // for exclusive mode it will reject if file already exist
     const fd = await this.fsPromises.open(filepath, this.writeFlags)

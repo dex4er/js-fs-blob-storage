@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.3.0 2018-10-22
+
+* Uses `fs.mkdir-shim` instead `make-dir`. It will use native `fs.mkdir` with
+  `recursive` option on Node >= 10.12.
+
 ## v1.2.0 2018-09-07
 
 * `DEFAULT_EXT` and `DEFAULT_PART` are static readonly properties of

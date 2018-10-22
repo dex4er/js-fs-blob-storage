@@ -17,7 +17,7 @@ Features:
 
 ## Requirements
 
-This module requires ES6 with Node >= 6.
+This module requires Node >= 6.
 
 ## Installation
 

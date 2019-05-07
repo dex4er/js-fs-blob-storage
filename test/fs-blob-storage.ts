@@ -1,10 +1,10 @@
-import { And, Before, Feature, Given, Scenario, Then, When } from './lib/steps'
+import {And, Before, Feature, Given, Scenario, Then, When} from './lib/steps'
 
-import { ReadStream, WriteStream } from 'fs'
+import {ReadStream, WriteStream} from 'fs'
 import path from 'path'
 import PromiseReadable from 'promise-readable'
 import PromiseWritable from 'promise-writable'
-import { Readable, Writable } from 'stream'
+import {Readable, Writable} from 'stream'
 
 import FsBlobStorage from '../src/fs-blob-storage'
 
@@ -16,9 +16,9 @@ Feature('Test FsBlobStorage without options', () => {
   const fakeFilesystem = {
     [STORAGEDIR]: {
       'commit.part': 'another file content here',
-      'read': 'file content here',
-      'remove': 'more file content here'
-    }
+      read: 'file content here',
+      remove: 'more file content here',
+    },
   }
 
   Scenario('Make new empty FsBlobStorage', () => {
@@ -45,7 +45,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key test is passed in', async () => {
@@ -66,7 +66,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Then('new file contains the new content', () => {
-      const content = mockFs.readFileSync(realFilename, { encoding: 'utf8' })
+      const content = mockFs.readFileSync(realFilename, {encoding: 'utf8'})
       content.should.equal('new content here')
     })
   })
@@ -82,7 +82,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key test is passed in', async () => {
@@ -110,7 +110,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key rs is passed in', async () => {
@@ -133,7 +133,7 @@ Feature('Test FsBlobStorage without options', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key remove is passed in', async () => {

@@ -1,10 +1,10 @@
-import { And, Before, Feature, Given, Scenario, Then, When } from './lib/steps'
+import {And, Before, Feature, Given, Scenario, Then, When} from './lib/steps'
 
-import { ReadStream, WriteStream } from 'fs'
+import {ReadStream, WriteStream} from 'fs'
 import path from 'path'
 import PromiseReadable from 'promise-readable'
 import PromiseWritable from 'promise-writable'
-import { Readable, Writable } from 'stream'
+import {Readable, Writable} from 'stream'
 
 import FsBlobStorage from '../src/fs-blob-storage'
 
@@ -17,8 +17,8 @@ Feature('Test FsBlobStorage with ext option', () => {
     [STORAGEDIR]: {
       'commit.txt.part': 'another file content here',
       'read.txt': 'file content here',
-      'remove.txt': 'more file content here'
-    }
+      'remove.txt': 'more file content here',
+    },
   }
 
   Scenario('FsBlobStorage produces write stream', () => {
@@ -33,11 +33,11 @@ Feature('Test FsBlobStorage with ext option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key test is passed in', async () => {
-      writable = await storage.createWriteStream(testKey, { ext: '.txt' })
+      writable = await storage.createWriteStream(testKey, {ext: '.txt'})
     })
 
     Then('created Writable should not be null', () => {
@@ -54,7 +54,7 @@ Feature('Test FsBlobStorage with ext option', () => {
     })
 
     Then('new file contains the new content', () => {
-      const content = mockFs.readFileSync(realFilename, { encoding: 'utf8' })
+      const content = mockFs.readFileSync(realFilename, {encoding: 'utf8'})
       content.should.equal('new content here')
     })
   })
@@ -70,11 +70,14 @@ Feature('Test FsBlobStorage with ext option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key test is passed in', async () => {
-      readable = await storage.createReadStream(testKey, { ext: '.txt', encoding: 'utf8' })
+      readable = await storage.createReadStream(testKey, {
+        ext: '.txt',
+        encoding: 'utf8',
+      })
     })
 
     Then('created Readable should not be null', () => {
@@ -98,11 +101,11 @@ Feature('Test FsBlobStorage with ext option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key rs is passed in', async () => {
-      await storage.commit(testKey, { ext: '.txt' })
+      await storage.commit(testKey, {ext: '.txt'})
     })
 
     Then('rs.part should be renamed to rs', () => {
@@ -121,11 +124,11 @@ Feature('Test FsBlobStorage with ext option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key remove is passed in', async () => {
-      await storage.remove(testKey, { ext: '.txt' })
+      await storage.remove(testKey, {ext: '.txt'})
     })
 
     Then('remove should be removed', () => {

@@ -1,9 +1,9 @@
-import { And, Before, Feature, Given, Scenario, Then, When } from './lib/steps'
+import {And, Before, Feature, Given, Scenario, Then, When} from './lib/steps'
 
-import { WriteStream } from 'fs'
+import {WriteStream} from 'fs'
 import path from 'path'
 import PromiseWritable from 'promise-writable'
-import { Writable } from 'stream'
+import {Writable} from 'stream'
 
 import FsBlobStorage from '../src/fs-blob-storage'
 
@@ -15,10 +15,10 @@ Feature('Test FsBlobStorage overwrite', () => {
   const fakeFilesystem = {
     [STORAGEDIR]: {
       'exists1.part': 'already exists',
-      'exists2': 'already exists',
+      exists2: 'already exists',
       'exists3.part': 'already exists',
-      'exists3': 'already exists'
-    }
+      exists3: 'already exists',
+    },
   }
 
   Scenario('FsBlobStorage produces write stream when part file exists', () => {
@@ -33,7 +33,7 @@ Feature('Test FsBlobStorage overwrite', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key test is passed in', async () => {
@@ -54,7 +54,7 @@ Feature('Test FsBlobStorage overwrite', () => {
     })
 
     Then('new file contains the new content', () => {
-      const content = mockFs.readFileSync(realFilename, { encoding: 'utf8' })
+      const content = mockFs.readFileSync(realFilename, {encoding: 'utf8'})
       content.should.equal('new content here')
     })
   })
@@ -71,7 +71,7 @@ Feature('Test FsBlobStorage overwrite', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key test is passed in', async () => {
@@ -92,7 +92,7 @@ Feature('Test FsBlobStorage overwrite', () => {
     })
 
     Then('new file contains the new content', () => {
-      const content = mockFs.readFileSync(realFilename, { encoding: 'utf8' })
+      const content = mockFs.readFileSync(realFilename, {encoding: 'utf8'})
       content.should.equal('new content here')
     })
   })
@@ -108,7 +108,7 @@ Feature('Test FsBlobStorage overwrite', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key rs is passed in', async () => {

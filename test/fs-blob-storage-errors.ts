@@ -1,4 +1,4 @@
-import { Before, Feature, Given, Scenario, Then, When } from './lib/steps'
+import {Before, Feature, Given, Scenario, Then, When} from './lib/steps'
 
 import FsBlobStorage from '../src/fs-blob-storage'
 
@@ -10,8 +10,8 @@ Feature('Test FsBlobStorage errors', () => {
   // tslint:disable:object-literal-key-quotes
   const fakeFilesystem = {
     [STORAGEDIR]: {
-      'empty': ''
-    }
+      empty: '',
+    },
   }
 
   Scenario('FsBlobStorage tries to produce read stream when object does not exist', () => {
@@ -25,7 +25,7 @@ Feature('Test FsBlobStorage errors', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key test is passed in', async () => {
@@ -37,8 +37,10 @@ Feature('Test FsBlobStorage errors', () => {
     })
 
     Then('error is caught', () => {
-      error.should.be.an.instanceof(Error)
-        .and.have.property('code').that.is.equal('ENOENT')
+      error.should.be.an
+        .instanceof(Error)
+        .and.have.property('code')
+        .that.is.equal('ENOENT')
     })
   })
 
@@ -53,7 +55,7 @@ Feature('Test FsBlobStorage errors', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key test is passed in', async () => {
@@ -65,8 +67,10 @@ Feature('Test FsBlobStorage errors', () => {
     })
 
     Then('error is caught', () => {
-      error.should.be.an.instanceof(Error)
-        .and.have.property('code').that.is.equal('ENOENT')
+      error.should.be.an
+        .instanceof(Error)
+        .and.have.property('code')
+        .that.is.equal('ENOENT')
     })
   })
 
@@ -81,7 +85,7 @@ Feature('Test FsBlobStorage errors', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key test is passed in', async () => {
@@ -93,8 +97,10 @@ Feature('Test FsBlobStorage errors', () => {
     })
 
     Then('error is caught', () => {
-      error.should.be.an.instanceof(Error)
-        .and.have.property('code').that.is.equal('ENOENT')
+      error.should.be.an
+        .instanceof(Error)
+        .and.have.property('code')
+        .that.is.equal('ENOENT')
     })
   })
 
@@ -109,7 +115,7 @@ Feature('Test FsBlobStorage errors', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, fs: mockFs as any })
+      storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
     When('key remove is passed in', async () => {
@@ -121,8 +127,10 @@ Feature('Test FsBlobStorage errors', () => {
     })
 
     Then('error is caught', () => {
-      error.should.be.an.instanceof(Error)
-        .and.have.property('code').that.is.equal('ENOENT')
+      error.should.be.an
+        .instanceof(Error)
+        .and.have.property('code')
+        .that.is.equal('ENOENT')
     })
   })
 })

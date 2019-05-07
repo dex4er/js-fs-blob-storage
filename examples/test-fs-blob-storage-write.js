@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { FsBlobStorage } = require('../lib/fs-blob-storage')
+const {FsBlobStorage} = require('../lib/fs-blob-storage')
 
 require('stream.pipeline-shim/auto')
 
@@ -12,8 +12,8 @@ const pipelinePromise = util.promisify(stream.pipeline)
 const SPOOLDIR = process.env.SPOOLDIR || '.'
 const DEBUG = Boolean(process.env.DEBUG)
 
-async function main () {
-  const storage = new FsBlobStorage({ path: SPOOLDIR, exclusive: true })
+async function main() {
+  const storage = new FsBlobStorage({path: SPOOLDIR, exclusive: true})
 
   const key = process.argv[2]
 
@@ -30,7 +30,9 @@ async function main () {
     for (const s of [process.stdin, writable]) {
       for (const event of ['close', 'data', 'drain', 'end', 'error', 'finish', 'pipe', 'readable', 'unpipe']) {
         const name = s === process.stdin ? 'stdin' : s.constructor.name
-        s.on(event, (arg) => console.debug(`${name} emitted ${event}:`, typeof arg === 'object' ? arg.constructor.name : arg))
+        s.on(event, arg =>
+          console.debug(`${name} emitted ${event}:`, typeof arg === 'object' ? arg.constructor.name : arg),
+        )
       }
     }
   }
@@ -45,4 +47,4 @@ async function main () {
   if (DEBUG) console.info('Done.')
 }
 
-main().catch((err) => console.error(err))
+main().catch(err => console.error(err))

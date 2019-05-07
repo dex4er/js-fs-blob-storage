@@ -1,4 +1,4 @@
-import { Before, Feature, Given, Scenario, Then, When } from './lib/steps'
+import {Before, Feature, Given, Scenario, Then, When} from './lib/steps'
 
 import FsBlobStorage from '../src/fs-blob-storage'
 
@@ -10,8 +10,8 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
   const fakeFilesystem = {
     [STORAGEDIR]: {
       'exists1.part': 'already exists',
-      'exists2': 'already exists'
-    }
+      exists2: 'already exists',
+    },
   }
 
   Scenario('FsBlobStorage tries to produce write stream when part file exists', () => {
@@ -25,7 +25,11 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true, fs: mockFs as any })
+      storage = new FsBlobStorage({
+        path: STORAGEDIR,
+        exclusive: true,
+        fs: mockFs as any,
+      })
     })
 
     When('key test is passed in', async () => {
@@ -37,8 +41,10 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
     })
 
     Then('error is caught', () => {
-      error.should.be.an.instanceof(Error)
-        .and.have.property('code').that.is.equal('EEXIST')
+      error.should.be.an
+        .instanceof(Error)
+        .and.have.property('code')
+        .that.is.equal('EEXIST')
     })
   })
 
@@ -53,7 +59,11 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
     })
 
     Given('FsBlobStorage object', () => {
-      storage = new FsBlobStorage({ path: STORAGEDIR, exclusive: true, fs: mockFs as any })
+      storage = new FsBlobStorage({
+        path: STORAGEDIR,
+        exclusive: true,
+        fs: mockFs as any,
+      })
     })
 
     When('key test is passed in', async () => {
@@ -65,8 +75,10 @@ Feature('Test FsBlobStorage errors for exclusive option', () => {
     })
 
     Then('error is caught', () => {
-      error.should.be.an.instanceof(Error)
-        .and.have.property('code').that.is.equal('EEXIST')
+      error.should.be.an
+        .instanceof(Error)
+        .and.have.property('code')
+        .that.is.equal('EEXIST')
     })
   })
 })

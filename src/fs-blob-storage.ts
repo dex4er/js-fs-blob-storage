@@ -37,11 +37,11 @@ export interface FsBlobStorageRemoveOptions {
 }
 
 interface FsPromises {
-  close: typeof fs.close.__promisify__,
-  mkdir: typeof fs.mkdir.__promisify__,
-  open: typeof fs.open.__promisify__,
-  rename: typeof fs.rename.__promisify__,
-  stat: typeof fs.stat.__promisify__,
+  close: typeof fs.close.__promisify__
+  mkdir: typeof fs.mkdir.__promisify__
+  open: typeof fs.open.__promisify__
+  rename: typeof fs.rename.__promisify__
+  stat: typeof fs.stat.__promisify__
   unlink: typeof fs.unlink.__promisify__
 }
 
@@ -57,7 +57,7 @@ export class FsBlobStorage {
 
   protected fsPromises: FsPromises
 
-  constructor (options: FsBlobStorageOptions = {}) {
+  constructor(options: FsBlobStorageOptions = {}) {
     this.ext = options.ext !== undefined ? options.ext : FsBlobStorage.DEFAULT_EXT
     this.part = options.part !== undefined ? options.part : FsBlobStorage.DEFAULT_PART
     this.writeFlags = options.exclusive ? 'wx' : 'w'
@@ -71,12 +71,12 @@ export class FsBlobStorage {
     }
   }
 
-  async createWriteStream (key: string, options: FsBlobStorageWriteStreamOptions = {}): Promise<fs.WriteStream> {
-    const { ext = this.ext, part = this.part, encoding } = options
+  async createWriteStream(key: string, options: FsBlobStorageWriteStreamOptions = {}): Promise<fs.WriteStream> {
+    const {ext = this.ext, part = this.part, encoding} = options
     const filepath = path.join(this.path, key + ext)
     const dirpath = path.dirname(filepath)
 
-    await this.fsPromises.mkdir(dirpath, { recursive: true })
+    await this.fsPromises.mkdir(dirpath, {recursive: true})
 
     // for exclusive mode it will reject if file already exist
     const fd = await this.fsPromises.open(filepath, this.writeFlags)
@@ -93,11 +93,11 @@ export class FsBlobStorage {
     }
 
     // first argument is ignored
-    return this.fs.createWriteStream(filepath + part, { fd, encoding })
+    return this.fs.createWriteStream(filepath + part, {fd, encoding})
   }
 
-  async createReadStream (key: string, options: FsBlobStorageReadStreamOptions = {}): Promise<fs.ReadStream> {
-    const { ext = this.ext, encoding } = options
+  async createReadStream(key: string, options: FsBlobStorageReadStreamOptions = {}): Promise<fs.ReadStream> {
+    const {ext = this.ext, encoding} = options
     const filepath = path.join(this.path, key + ext)
 
     const fd = await this.fsPromises.open(filepath, 'r')
@@ -105,22 +105,25 @@ export class FsBlobStorage {
     const stats = await this.fsPromises.stat(filepath)
 
     if (!stats.size) {
-      throw Object.assign(new Error(`ENOENT: empty file, open '${filepath}'`), { code: 'ENOENT', path: filepath })
+      throw Object.assign(new Error(`ENOENT: empty file, open '${filepath}'`), {
+        code: 'ENOENT',
+        path: filepath,
+      })
     }
 
-    return this.fs.createReadStream(filepath, { fd, encoding })
+    return this.fs.createReadStream(filepath, {fd, encoding})
   }
 
-  async commit (key: string, options: FsBlobStorageCommitOptions = {}): Promise<void> {
-    const { ext = this.ext, part = this.part } = options
+  async commit(key: string, options: FsBlobStorageCommitOptions = {}): Promise<void> {
+    const {ext = this.ext, part = this.part} = options
     if (part) {
       const filepath = path.join(this.path, key + ext)
       return this.fsPromises.rename(filepath + part, filepath)
     }
   }
 
-  async remove (key: string, options: FsBlobStorageRemoveOptions = {}): Promise<void> {
-    const { ext = this.ext } = options
+  async remove(key: string, options: FsBlobStorageRemoveOptions = {}): Promise<void> {
+    const {ext = this.ext} = options
     const filepath = path.join(this.path, key + ext)
     return this.fsPromises.unlink(filepath)
   }

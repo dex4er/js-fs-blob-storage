@@ -17,7 +17,7 @@ Features:
 
 ## Requirements
 
-This module requires Node >= 6.
+This module requires Node >= 8.
 
 ## Installation
 
@@ -162,6 +162,6 @@ VirtualBox. In this case no partial files should be used.
 
 ## License
 
-Copyright (c) 2018 Piotr Roszatycki <piotr.roszatycki@gmail.com>
+Copyright (c) 2018-2019 Piotr Roszatycki <piotr.roszatycki@gmail.com>
 
 [MIT](https://opensource.org/licenses/MIT)

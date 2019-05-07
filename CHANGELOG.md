@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.0 2019-05-07
+
+* Breaking change: dropped support for Node 8.
+
 ## v1.3.0 2018-10-22
 
 * Uses `fs.mkdir-shim` instead `make-dir`. It will use native `fs.mkdir` with

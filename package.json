@@ -1,6 +1,6 @@
 {
   "name": "fs-blob-storage",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Blob storage on filesystem, with streams and promises API",
   "main": "lib/fs-blob-storage.js",
   "typings": "lib/fs-blob-storage.d.ts",
@@ -21,7 +21,7 @@
   },
   "homepage": "http://github.com/dex4er/js-fs-blob-storage",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "dependencies": {
     "fs.mkdir-shim": "^1.0.1",

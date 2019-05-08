@@ -48,7 +48,7 @@
     "prettier": "^1.17.0",
     "promise-readable": "^3.1.5",
     "promise-writable": "^3.1.2",
-    "rimraf": "^2.6.3",
+    "shx": "^0.3.2",
     "stream.pipeline-shim": "^1.0.4",
     "ts-node": "^8.1.0",
     "tslint": "^5.16.0",
@@ -56,8 +56,9 @@
     "typescript": "^3.4.5"
   },
   "scripts": {
-    "build": "tsc --pretty",
-    "clean": "rimraf lib",
+    "build": "npm run compile",
+    "compile": "tsc --pretty",
+    "clean": "shx rm -rf lib",
     "postpublish": "git tag v$npm_package_version -a -m \"Release v$npm_package_version\" && git push --tags",
     "prepublishOnly": "npm run build",
     "pretest": "npm run build && tsc --pretty -p examples && tsc --pretty -p test && eslint . && tslint -t stylish -p . && tslint -t stylish -p examples && tslint -t stylish -p test && prettier --ignore-path .gitignore --list-different '**/*.ts' '**/*.js' && markdownlint \"*.md\"",

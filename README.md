@@ -46,13 +46,13 @@ Transpiling this module with own settings in `tsconfig.json`:
 ## Usage
 
 ```js
-const { FsBlobStorage } = require('fs-blob-storage')
+const {FsBlobStorage} = require('fs-blob-storage')
 ```
 
 _Typescript:_
 
 ```ts
-import FsBlobStorage from 'fs-blob-storage'
+import {FsBlobStorage} from 'fs-blob-storage'
 ```
 
 ### DEFAULT_EXT

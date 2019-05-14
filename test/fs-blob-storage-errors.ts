@@ -1,8 +1,8 @@
 import {Before, Feature, Given, Scenario, Then, When} from './lib/steps'
 
-import FsBlobStorage from '../src/fs-blob-storage'
+import {FsBlobStorage} from '../src/fs-blob-storage'
 
-import mockFs from './lib/mock-fs'
+import {mockFs} from './lib/mock-fs'
 
 const STORAGEDIR = '/tmp/storage'
 

@@ -2,8 +2,8 @@ import {And, Before, Feature, Given, Scenario, Then, When} from './lib/steps'
 
 import {ReadStream, WriteStream} from 'fs'
 import path from 'path'
-import PromiseReadable from 'promise-readable'
-import PromiseWritable from 'promise-writable'
+import {PromiseReadable} from 'promise-readable'
+import {PromiseWritable} from 'promise-writable'
 import {Readable, Writable} from 'stream'
 
 import FsBlobStorage from '../src/fs-blob-storage'

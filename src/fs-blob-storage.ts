@@ -3,7 +3,7 @@
 import fs from 'fs'
 import mkdir from 'fs.mkdir-shim'
 import path from 'path'
-import promisify from 'util.promisify'
+import util from 'util'
 
 export interface FsBlobStorageOptions {
   ext?: string
@@ -62,9 +62,9 @@ export class FsBlobStorage {
     this.path = options.path || '.'
 
     this.fsPromises = {} as FsPromises
-    this.fsPromises.mkdir = promisify(mkdir)
+    this.fsPromises.mkdir = util.promisify(mkdir)
     for (const method of ['close', 'open', 'rename', 'stat', 'unlink'] as Array<keyof FsPromises>) {
-      this.fsPromises[method] = promisify(this.fs[method]) as any
+      this.fsPromises[method] = util.promisify(this.fs[method]) as any
     }
   }
 

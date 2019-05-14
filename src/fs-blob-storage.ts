@@ -3,10 +3,7 @@
 import fs from 'fs'
 import mkdir from 'fs.mkdir-shim'
 import path from 'path'
-import util from 'util'
-
-// tslint:disable-next-line:no-var-requires
-const promisify = require('util.promisify') as typeof util.promisify
+import promisify from 'util.promisify'
 
 export interface FsBlobStorageOptions {
   ext?: string

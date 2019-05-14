@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.2 2019-05-15
+
+* Use @types/util.promisify.
+
 ## v2.0.1 2019-05-08
 
 * Fix dependencies.

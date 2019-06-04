@@ -33,18 +33,6 @@ _Additionally for Typescript:_
 npm install -D @types/node
 ```
 
-Transpiling this module with own settings in `tsconfig.json`:
-
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "fs-blob-storage": ["node_modules/fs-blob-storage/src/fs-blob-storage"]
-    }
-  }
-}
-```
-
 ## Usage
 
 ```js
@@ -54,6 +42,8 @@ const {FsBlobStorage} = require("fs-blob-storage")
 _Typescript:_
 
 ```ts
+import FsBlobStorage from "fs-blob-storage"
+// or
 import {FsBlobStorage} from "fs-blob-storage"
 ```
 

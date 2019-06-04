@@ -2,16 +2,16 @@
 
 /// <reference lib="es2017" />
 
-import {FsBlobStorage} from '../src/fs-blob-storage'
+import {FsBlobStorage} from "../src/fs-blob-storage"
 
-import 'stream.pipeline-shim/auto'
+import "stream.pipeline-shim/auto"
 
-import stream from 'stream'
-import util from 'util'
+import stream from "stream"
+import util from "util"
 
 const pipelinePromise = util.promisify(stream.pipeline)
 
-const SPOOLDIR = process.env.SPOOLDIR || '.'
+const SPOOLDIR = process.env.SPOOLDIR || "."
 const DEBUG = Boolean(process.env.DEBUG)
 
 async function main(): Promise<void> {
@@ -25,16 +25,16 @@ async function main(): Promise<void> {
   }
 
   const writable = await storage.createWriteStream(key)
-  if (DEBUG) console.debug('createWriteStream returned')
+  if (DEBUG) console.debug("createWriteStream returned")
 
   // extra debug trace
   // tslint:disable:no-unnecessary-type-assertion
   if (DEBUG) {
     for (const s of [process.stdin, writable] as any[]) {
-      for (const event of ['close', 'data', 'drain', 'end', 'error', 'finish', 'pipe', 'readable', 'unpipe']) {
-        const name = s === process.stdin ? 'stdin' : s.constructor.name
+      for (const event of ["close", "data", "drain", "end", "error", "finish", "pipe", "readable", "unpipe"]) {
+        const name = s === process.stdin ? "stdin" : s.constructor.name
         s.on(event, (arg?: any) =>
-          console.debug(`${name} emitted ${event}:`, typeof arg === 'object' ? arg.constructor.name : arg),
+          console.debug(`${name} emitted ${event}:`, typeof arg === "object" ? arg.constructor.name : arg),
         )
       }
     }
@@ -44,10 +44,10 @@ async function main(): Promise<void> {
 
   await pipelinePromise(process.stdin, writable)
 
-  if (DEBUG) console.debug('stream finished')
+  if (DEBUG) console.debug("stream finished")
 
   await storage.commit(key)
-  if (DEBUG) console.info('Done.')
+  if (DEBUG) console.info("Done.")
 }
 
 main().catch(err => console.error(err))

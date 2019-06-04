@@ -1,9 +1,9 @@
 /// <reference types="node" />
 
-import fs from 'fs'
-import mkdir from 'fs.mkdir-shim'
-import path from 'path'
-import util from 'util'
+import fs from "fs"
+import mkdir from "fs.mkdir-shim"
+import path from "path"
+import util from "util"
 
 export interface FsBlobStorageOptions {
   ext?: string
@@ -43,8 +43,8 @@ interface FsPromises {
 }
 
 export class FsBlobStorage {
-  static readonly DEFAULT_EXT = ''
-  static readonly DEFAULT_PART = '.part'
+  static readonly DEFAULT_EXT = ""
+  static readonly DEFAULT_PART = ".part"
 
   protected ext: string
   protected part: string
@@ -57,13 +57,13 @@ export class FsBlobStorage {
   constructor(options: FsBlobStorageOptions = {}) {
     this.ext = options.ext !== undefined ? options.ext : FsBlobStorage.DEFAULT_EXT
     this.part = options.part !== undefined ? options.part : FsBlobStorage.DEFAULT_PART
-    this.writeFlags = options.exclusive ? 'wx' : 'w'
+    this.writeFlags = options.exclusive ? "wx" : "w"
     this.fs = options.fs || fs
-    this.path = options.path || '.'
+    this.path = options.path || "."
 
     this.fsPromises = {} as FsPromises
     this.fsPromises.mkdir = util.promisify(mkdir)
-    for (const method of ['close', 'open', 'rename', 'stat', 'unlink'] as Array<keyof FsPromises>) {
+    for (const method of ["close", "open", "rename", "stat", "unlink"] as Array<keyof FsPromises>) {
       this.fsPromises[method] = util.promisify(this.fs[method]) as any
     }
   }
@@ -97,13 +97,13 @@ export class FsBlobStorage {
     const {ext = this.ext, encoding} = options
     const filepath = path.join(this.path, key + ext)
 
-    const fd = await this.fsPromises.open(filepath, 'r')
+    const fd = await this.fsPromises.open(filepath, "r")
 
     const stats = await this.fsPromises.stat(filepath)
 
     if (!stats.size) {
       throw Object.assign(new Error(`ENOENT: empty file, open '${filepath}'`), {
-        code: 'ENOENT',
+        code: "ENOENT",
         path: filepath,
       })
     }

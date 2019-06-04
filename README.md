@@ -1,19 +1,21 @@
 # fs-blob-storage
 
 <!-- markdownlint-disable MD013 -->
+
 [![Build Status](https://secure.travis-ci.org/dex4er/js-fs-blob-storage.svg)](http://travis-ci.org/dex4er/js-fs-blob-storage) [![Coverage Status](https://coveralls.io/repos/github/dex4er/js-fs-blob-storage/badge.svg)](https://coveralls.io/github/dex4er/js-fs-blob-storage) [![npm](https://img.shields.io/npm/v/fs-blob-storage.svg)](https://www.npmjs.com/package/fs-blob-storage)
+
 <!-- markdownlint-enable MD013 -->
 
 Blob storage on filesystem, with streams and promises API.
 
 Features:
 
-* Simple API
-* Read and write file streams
-* Partial files
-* Safe, atomic operations
-* Works with any POSIX or NTFS filesystem
-* NFS friendly locking
+- Simple API
+- Read and write file streams
+- Partial files
+- Safe, atomic operations
+- Works with any POSIX or NTFS filesystem
+- NFS friendly locking
 
 ## Requirements
 
@@ -46,13 +48,13 @@ Transpiling this module with own settings in `tsconfig.json`:
 ## Usage
 
 ```js
-const {FsBlobStorage} = require('fs-blob-storage')
+const {FsBlobStorage} = require("fs-blob-storage")
 ```
 
 _Typescript:_
 
 ```ts
-import {FsBlobStorage} from 'fs-blob-storage'
+import {FsBlobStorage} from "fs-blob-storage"
 ```
 
 ### DEFAULT_EXT
@@ -71,23 +73,23 @@ const storage = new FsBlobStorage(options)
 
 _Options:_
 
-* `ext` is a default `ext` argument for methods (optional, default:
+- `ext` is a default `ext` argument for methods (optional, default:
   `DEFAULT_EXT`)
-* `part` is a default `part` argument for methods (optional, default:
+- `part` is a default `part` argument for methods (optional, default:
   `DEFAULT_PART`)
-* `exclusive` if is true then can't create new object if already exists with
+- `exclusive` if is true then can't create new object if already exists with
   the same key (optional, default: `false`)
-* `fs` is a [File System](https://nodejs.org/api/fs.html) module (optional,
+- `fs` is a [File System](https://nodejs.org/api/fs.html) module (optional,
   default: `require('fs')`)
-* `path` is a directory path of the storage (optional, default: `'.'`)
+- `path` is a directory path of the storage (optional, default: `'.'`)
 
 _Example:_
 
 ```js
 const storage = new FsBlobStorage({
-  part: '.lock',
-  path: '/var/spool/mail',
-  exclusive: true
+  part: ".lock",
+  path: "/var/spool/mail",
+  exclusive: true,
 })
 ```
 
@@ -99,11 +101,11 @@ const writable = await storage.createWriteStream(key, options)
 
 _Options:_
 
-* `ext` is a default extension added to file name for the object (optional,
-   default: `this.ext`)
-* `part` is a extension added to file name which can be later commited
-   (optional, default: `this.part`)
-* `encoding` is a encoding for created file (optional, default: `null`)
+- `ext` is a default extension added to file name for the object (optional,
+  default: `this.ext`)
+- `part` is a extension added to file name which can be later commited
+  (optional, default: `this.part`)
+- `encoding` is a encoding for created file (optional, default: `null`)
 
 Creates a writable stream for a new object in the storage. Object is stored with
 the file name based on `key` and `ext` and `part`. Throws an error if has
@@ -117,9 +119,9 @@ const readable = await storage.createWriteStream(key, options)
 
 _Options:_
 
-* `ext` is a default extension added to file name for the object (optional,
-   default: '')
-* `encoding` is a encoding for created file (optional, default: 'utf8')
+- `ext` is a default extension added to file name for the object (optional,
+  default: '')
+- `encoding` is a encoding for created file (optional, default: 'utf8')
 
 Creates a readable stream for an existing object in the storage. Throws an error
 if has occurred or the object doesn't exist or its size is zero.
@@ -132,10 +134,10 @@ await storage.commit(key, options)
 
 _Options:_
 
-* `ext` is a default extension added to file name for the object (optional,
-   default: `this.ext`)
-* `part` is a extension added to file name which can be later commited
-   (optional, default: `this.part`)
+- `ext` is a default extension added to file name for the object (optional,
+  default: `this.ext`)
+- `part` is a extension added to file name which can be later commited
+  (optional, default: `this.part`)
 
 Commits the object in the storage. It means that file name for the object is
 renamed and the additional extension for partial objects is removed. Throws an
@@ -149,8 +151,8 @@ await storage.remove(key, options)
 
 _Options:_
 
-* `ext` is a default extension added to file name for the object (optional,
-   default: `this.ext`)
+- `ext` is a default extension added to file name for the object (optional,
+  default: `this.ext`)
 
 Removes the object from the storage. Throws an error if has occurred or the
 object doesn't exist.

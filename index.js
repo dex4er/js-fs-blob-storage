@@ -1,1 +1,1 @@
-module.exports = require('./lib/fs-blob-storage')
+module.exports = require("./lib/fs-blob-storage")

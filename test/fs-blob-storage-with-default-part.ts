@@ -1,29 +1,29 @@
-import {And, Before, Feature, Given, Scenario, Then, When} from './lib/steps'
+import {And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
 
-import {ReadStream, WriteStream} from 'fs'
-import path from 'path'
-import {PromiseReadable} from 'promise-readable'
-import {PromiseWritable} from 'promise-writable'
-import {Readable, Writable} from 'stream'
+import {ReadStream, WriteStream} from "fs"
+import path from "path"
+import {PromiseReadable} from "promise-readable"
+import {PromiseWritable} from "promise-writable"
+import {Readable, Writable} from "stream"
 
-import FsBlobStorage from '../src/fs-blob-storage'
+import FsBlobStorage from "../src/fs-blob-storage"
 
-import mockFs from './lib/mock-fs'
+import mockFs from "./lib/mock-fs"
 
-const STORAGEDIR = '/tmp/storage'
+const STORAGEDIR = "/tmp/storage"
 
-Feature('Test FsBlobStorage with part option', () => {
+Feature("Test FsBlobStorage with part option", () => {
   const fakeFilesystem = {
     [STORAGEDIR]: {
-      'commit.txt.lock': 'another file content here',
-      'read.txt': 'file content here',
-      'remove.txt': 'more file content here',
+      "commit.txt.lock": "another file content here",
+      "read.txt": "file content here",
+      "remove.txt": "more file content here",
     },
   }
 
-  Scenario('FsBlobStorage produces write stream', () => {
-    const testKey = 'write'
-    const realFilename = path.join(STORAGEDIR, testKey + '.txt.lock')
+  Scenario("FsBlobStorage produces write stream", () => {
+    const testKey = "write"
+    const realFilename = path.join(STORAGEDIR, testKey + ".txt.lock")
 
     let storage: FsBlobStorage
     let writable: WriteStream
@@ -32,39 +32,39 @@ Feature('Test FsBlobStorage with part option', () => {
       mockFs.init(fakeFilesystem)
     })
 
-    Given('FsBlobStorage object', () => {
+    Given("FsBlobStorage object", () => {
       storage = new FsBlobStorage({
         path: STORAGEDIR,
-        part: '.lock',
+        part: ".lock",
         fs: mockFs as any,
       })
     })
 
-    When('key test is passed in', async () => {
-      writable = await storage.createWriteStream(testKey, {ext: '.txt'})
+    When("key test is passed in", async () => {
+      writable = await storage.createWriteStream(testKey, {ext: ".txt"})
     })
 
-    Then('created Writable should not be null', () => {
+    Then("created Writable should not be null", () => {
       writable.should.be.an.instanceof(Writable)
     })
 
-    And('.part file should be created', () => {
+    And(".part file should be created", () => {
       return mockFs.existsSync(realFilename).should.be.true
     })
 
-    When('I write to the Writable stream', async () => {
+    When("I write to the Writable stream", async () => {
       const promiseWritable = new PromiseWritable(writable)
-      await promiseWritable.writeAll('new content here')
+      await promiseWritable.writeAll("new content here")
     })
 
-    Then('new file contains the new content', () => {
-      const content = mockFs.readFileSync(realFilename, {encoding: 'utf8'})
-      content.should.equal('new content here')
+    Then("new file contains the new content", () => {
+      const content = mockFs.readFileSync(realFilename, {encoding: "utf8"})
+      content.should.equal("new content here")
     })
   })
 
-  Scenario('FsBlobStorage produces read stream', () => {
-    const testKey = 'read'
+  Scenario("FsBlobStorage produces read stream", () => {
+    const testKey = "read"
 
     let readable: ReadStream
     let storage: FsBlobStorage
@@ -73,30 +73,30 @@ Feature('Test FsBlobStorage with part option', () => {
       mockFs.init(fakeFilesystem)
     })
 
-    Given('FsBlobStorage object', () => {
+    Given("FsBlobStorage object", () => {
       storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
-    When('key test is passed in', async () => {
+    When("key test is passed in", async () => {
       readable = await storage.createReadStream(testKey, {
-        ext: '.txt',
-        encoding: 'utf8',
+        ext: ".txt",
+        encoding: "utf8",
       })
     })
 
-    Then('created Readable should not be null', () => {
+    Then("created Readable should not be null", () => {
       readable.should.be.an.instanceof(Readable)
     })
 
-    And('Readable should contain the content', async () => {
+    And("Readable should contain the content", async () => {
       const promiseReadable = new PromiseReadable(readable)
-      await promiseReadable.read().should.eventually.equal('file content here')
+      await promiseReadable.read().should.eventually.equal("file content here")
     })
   })
 
-  Scenario('FsBlobStorage commits file', () => {
-    const testKey = 'commit'
-    const realFilename = path.join(STORAGEDIR, testKey + '.txt')
+  Scenario("FsBlobStorage commits file", () => {
+    const testKey = "commit"
+    const realFilename = path.join(STORAGEDIR, testKey + ".txt")
 
     let storage: FsBlobStorage
 
@@ -104,26 +104,26 @@ Feature('Test FsBlobStorage with part option', () => {
       mockFs.init(fakeFilesystem)
     })
 
-    Given('FsBlobStorage object', () => {
+    Given("FsBlobStorage object", () => {
       storage = new FsBlobStorage({
         path: STORAGEDIR,
-        part: '.lock',
+        part: ".lock",
         fs: mockFs as any,
       })
     })
 
-    When('key rs is passed in', async () => {
-      await storage.commit(testKey, {ext: '.txt'})
+    When("key rs is passed in", async () => {
+      await storage.commit(testKey, {ext: ".txt"})
     })
 
-    Then('rs.part should be renamed to rs', () => {
+    Then("rs.part should be renamed to rs", () => {
       return mockFs.existsSync(realFilename).should.be.true
     })
   })
 
-  Scenario('FsBlobStorage removes file', () => {
-    const testKey = 'remove'
-    const realFilename = path.join(STORAGEDIR, testKey + '.txt')
+  Scenario("FsBlobStorage removes file", () => {
+    const testKey = "remove"
+    const realFilename = path.join(STORAGEDIR, testKey + ".txt")
 
     let storage: FsBlobStorage
 
@@ -131,15 +131,15 @@ Feature('Test FsBlobStorage with part option', () => {
       mockFs.init(fakeFilesystem)
     })
 
-    Given('FsBlobStorage object', () => {
+    Given("FsBlobStorage object", () => {
       storage = new FsBlobStorage({path: STORAGEDIR, fs: mockFs as any})
     })
 
-    When('key remove is passed in', async () => {
-      await storage.remove(testKey, {ext: '.txt'})
+    When("key remove is passed in", async () => {
+      await storage.remove(testKey, {ext: ".txt"})
     })
 
-    Then('remove should be removed', () => {
+    Then("remove should be removed", () => {
       return mockFs.existsSync(realFilename).should.be.false
     })
   })

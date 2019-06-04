@@ -1,3 +1,5 @@
+import {expect} from "chai"
+
 import {Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
 
 import {FsBlobStorage} from "../src/fs-blob-storage"
@@ -37,10 +39,9 @@ Feature("Test FsBlobStorage errors", () => {
     })
 
     Then("error is caught", () => {
-      error.should.be.an
-        .instanceof(Error)
-        .and.have.property("code")
-        .that.is.equal("ENOENT")
+      expect(error)
+        .to.be.an("error")
+        .and.have.property("code", "ENOENT")
     })
   })
 
@@ -67,10 +68,9 @@ Feature("Test FsBlobStorage errors", () => {
     })
 
     Then("error is caught", () => {
-      error.should.be.an
-        .instanceof(Error)
-        .and.have.property("code")
-        .that.is.equal("ENOENT")
+      expect(error)
+        .to.be.an("error")
+        .and.have.property("code", "ENOENT")
     })
   })
 
@@ -97,10 +97,9 @@ Feature("Test FsBlobStorage errors", () => {
     })
 
     Then("error is caught", () => {
-      error.should.be.an
-        .instanceof(Error)
-        .and.have.property("code")
-        .that.is.equal("ENOENT")
+      expect(error)
+        .to.be.an("error")
+        .and.have.property("code", "ENOENT")
     })
   })
 
@@ -127,10 +126,9 @@ Feature("Test FsBlobStorage errors", () => {
     })
 
     Then("error is caught", () => {
-      error.should.be.an
-        .instanceof(Error)
-        .and.have.property("code")
-        .that.is.equal("ENOENT")
+      expect(error)
+        .to.be.an("error")
+        .and.have.property("code", "ENOENT")
     })
   })
 })

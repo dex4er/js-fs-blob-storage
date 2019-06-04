@@ -1,3 +1,8 @@
+import chai, {expect} from "chai"
+
+import dirtyChai from "dirty-chai"
+chai.use(dirtyChai)
+
 import {And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
 
 import {WriteStream} from "fs"
@@ -41,11 +46,11 @@ Feature("Test FsBlobStorage overwrite", () => {
     })
 
     Then("created Writable should not be null", () => {
-      writable.should.be.an.instanceof(Writable)
+      expect(writable).to.be.an.instanceof(Writable)
     })
 
     And(".part file should be created", () => {
-      return mockFs.existsSync(realFilename).should.be.true
+      expect(mockFs.existsSync(realFilename)).to.be.true()
     })
 
     When("I write to the Writable stream", async () => {
@@ -55,7 +60,7 @@ Feature("Test FsBlobStorage overwrite", () => {
 
     Then("new file contains the new content", () => {
       const content = mockFs.readFileSync(realFilename, {encoding: "utf8"})
-      content.should.equal("new content here")
+      expect(content).is.equal("new content here")
     })
   })
 
@@ -79,11 +84,11 @@ Feature("Test FsBlobStorage overwrite", () => {
     })
 
     Then("created Writable should not be null", () => {
-      writable.should.be.an.instanceof(Writable)
+      expect(writable).to.be.an.instanceof(Writable)
     })
 
     And(".part file should be created", () => {
-      return mockFs.existsSync(realFilename).should.be.true
+      expect(mockFs.existsSync(realFilename)).to.be.true()
     })
 
     When("I write to the Writable stream", async () => {
@@ -93,7 +98,7 @@ Feature("Test FsBlobStorage overwrite", () => {
 
     Then("new file contains the new content", () => {
       const content = mockFs.readFileSync(realFilename, {encoding: "utf8"})
-      content.should.equal("new content here")
+      expect(content).is.equal("new content here")
     })
   })
 
@@ -116,7 +121,7 @@ Feature("Test FsBlobStorage overwrite", () => {
     })
 
     Then("rs.part should be renamed to rs", () => {
-      return mockFs.existsSync(realFilename).should.be.true
+      expect(mockFs.existsSync(realFilename)).to.be.true()
     })
   })
 })

@@ -1,3 +1,8 @@
+import chai, {expect} from "chai"
+
+import dirtyChai from "dirty-chai"
+chai.use(dirtyChai)
+
 import {And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
 
 import {ReadStream, WriteStream} from "fs"
@@ -29,7 +34,7 @@ Feature("Test FsBlobStorage without options", () => {
     })
 
     Then("FsBlobStorage object has correct type", () => {
-      storage.should.be.an.instanceof(FsBlobStorage)
+      expect(storage).to.be.an.instanceof(FsBlobStorage)
     })
   })
 
@@ -53,11 +58,11 @@ Feature("Test FsBlobStorage without options", () => {
     })
 
     Then("created Writable should not be null", () => {
-      writable.should.be.an.instanceof(Writable)
+      expect(writable).to.be.an.instanceof(Writable)
     })
 
     And(".part file should be created", () => {
-      return mockFs.existsSync(realFilename).should.be.true
+      expect(mockFs.existsSync(realFilename)).to.be.true()
     })
 
     When("I write to the Writable stream", async () => {
@@ -67,7 +72,7 @@ Feature("Test FsBlobStorage without options", () => {
 
     Then("new file contains the new content", () => {
       const content = mockFs.readFileSync(realFilename, {encoding: "utf8"})
-      content.should.equal("new content here")
+      expect(content).is.equal("new content here")
     })
   })
 
@@ -90,12 +95,12 @@ Feature("Test FsBlobStorage without options", () => {
     })
 
     Then("created Readable should not be null", () => {
-      readable.should.be.an.instanceof(Readable)
+      expect(readable).to.be.an.instanceof(Readable)
     })
 
     And("Readable should contain the content", async () => {
       const promiseReadable = new PromiseReadable(readable)
-      await promiseReadable.read().should.eventually.deep.equal(Buffer.from("file content here"))
+      expect(await promiseReadable.read()).to.deep.equal(Buffer.from("file content here"))
     })
   })
 
@@ -118,7 +123,7 @@ Feature("Test FsBlobStorage without options", () => {
     })
 
     Then("rs.part should be renamed to rs", async () => {
-      return mockFs.existsSync(realFilename).should.be.true
+      expect(mockFs.existsSync(realFilename)).to.be.true()
     })
   })
 
@@ -141,7 +146,7 @@ Feature("Test FsBlobStorage without options", () => {
     })
 
     Then("remove should be removed", () => {
-      return mockFs.existsSync(realFilename).should.be.false
+      expect(mockFs.existsSync(realFilename)).to.be.false()
     })
   })
 })

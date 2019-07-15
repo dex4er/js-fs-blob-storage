@@ -3,7 +3,7 @@ import chai, {expect} from "chai"
 import dirtyChai from "dirty-chai"
 chai.use(dirtyChai)
 
-import {And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
+import {After, And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
 
 import {ReadStream, WriteStream} from "fs"
 import path from "path"
@@ -32,6 +32,7 @@ Feature("Test FsBlobStorage with empty part options", () => {
     const realFilename = path.join(STORAGEDIR, testKey)
     const realFilenamePart = realFilename + ".part"
 
+    let promiseWritable: PromiseWritable<WriteStream>
     let storage: FsBlobStorage
     let writable: WriteStream
 
@@ -56,7 +57,7 @@ Feature("Test FsBlobStorage with empty part options", () => {
     })
 
     When("I write to the Writable stream", async () => {
-      const promiseWritable = new PromiseWritable(writable)
+      promiseWritable = new PromiseWritable(writable)
       await promiseWritable.writeAll("new content here")
     })
 
@@ -64,11 +65,18 @@ Feature("Test FsBlobStorage with empty part options", () => {
       const content = mockFs.readFileSync(realFilename, {encoding: "utf8"})
       expect(content).is.equal("new content here")
     })
+
+    After(() => {
+      if (promiseWritable) {
+        promiseWritable.destroy()
+      }
+    })
   })
 
   Scenario("FsBlobStorage produces read stream", () => {
     const testKey = "read"
 
+    let promiseReadable: PromiseReadable<ReadStream>
     let readable: ReadStream
     let storage: FsBlobStorage
 
@@ -89,8 +97,14 @@ Feature("Test FsBlobStorage with empty part options", () => {
     })
 
     And("Readable should contain the content", async () => {
-      const promiseReadable = new PromiseReadable(readable)
+      promiseReadable = new PromiseReadable(readable)
       expect(await promiseReadable.read()).to.deep.equal(Buffer.from("file content here"))
+    })
+
+    After(() => {
+      if (promiseReadable) {
+        promiseReadable.destroy()
+      }
     })
   })
 

@@ -3,7 +3,7 @@ import chai, {expect} from "chai"
 import dirtyChai from "dirty-chai"
 chai.use(dirtyChai)
 
-import {And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
+import {After, And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
 
 import {WriteStream} from "fs"
 import path from "path"
@@ -30,6 +30,7 @@ Feature("Test FsBlobStorage overwrite", () => {
     const testKey = "exists1"
     const realFilename = path.join(STORAGEDIR, testKey + ".part")
 
+    let promiseWritable: PromiseWritable<WriteStream>
     let storage: FsBlobStorage
     let writable: WriteStream
 
@@ -54,13 +55,19 @@ Feature("Test FsBlobStorage overwrite", () => {
     })
 
     When("I write to the Writable stream", async () => {
-      const promiseWritable = new PromiseWritable(writable)
+      promiseWritable = new PromiseWritable(writable)
       await promiseWritable.writeAll("new content here")
     })
 
     Then("new file contains the new content", () => {
       const content = mockFs.readFileSync(realFilename, {encoding: "utf8"})
       expect(content).is.equal("new content here")
+    })
+
+    After(() => {
+      if (promiseWritable) {
+        promiseWritable.destroy()
+      }
     })
   })
 
@@ -68,6 +75,7 @@ Feature("Test FsBlobStorage overwrite", () => {
     const testKey = "exists2"
     const realFilename = path.join(STORAGEDIR, testKey + ".part")
 
+    let promiseWritable: PromiseWritable<WriteStream>
     let storage: FsBlobStorage
     let writable: WriteStream
 
@@ -92,13 +100,19 @@ Feature("Test FsBlobStorage overwrite", () => {
     })
 
     When("I write to the Writable stream", async () => {
-      const promiseWritable = new PromiseWritable(writable)
+      promiseWritable = new PromiseWritable(writable)
       await promiseWritable.writeAll("new content here")
     })
 
     Then("new file contains the new content", () => {
       const content = mockFs.readFileSync(realFilename, {encoding: "utf8"})
       expect(content).is.equal("new content here")
+    })
+
+    After(() => {
+      if (promiseWritable) {
+        promiseWritable.destroy()
+      }
     })
   })
 

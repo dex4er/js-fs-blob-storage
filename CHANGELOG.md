@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.1.3 2019-10-07
+
+- Use `mocha-steps` for testing.
+- Updated dependencies.
+
 ## v2.1.2 2019-07-15
 
 - Updated dependencies.

@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.4 2019-10-08
+
+- Bugfix `mocha-steps` wrapper for testing.
+
 ## v2.1.3 2019-10-07
 
 - Use `mocha-steps` for testing.

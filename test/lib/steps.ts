@@ -20,7 +20,7 @@ export function And(what: string, how: (done: Mocha.Done) => void): Mocha.Test {
   return MochaSteps.step("And " + what, how)
 }
 export function After(callback: (this: Mocha.Context, done: Mocha.Done) => any): void {
-  Mocha.before(callback)
+  Mocha.after(callback)
 }
 export function Before(callback: (this: Mocha.Context, done: Mocha.Done) => any): void {
   Mocha.before(callback)

@@ -1,9 +1,10 @@
 /// <reference types="node" />
 
 import fs from "fs"
-import mkdir from "fs.mkdir-shim"
 import path from "path"
 import util from "util"
+
+import mkdir from "fs.mkdir-shim"
 
 export interface FsBlobStorageOptions {
   ext?: string
@@ -42,10 +43,10 @@ interface FsPromises {
   unlink: typeof fs.unlink.__promisify__
 }
 
-export class FsBlobStorage {
-  static readonly DEFAULT_EXT = ""
-  static readonly DEFAULT_PART = ".part"
+export const DEFAULT_EXT = ""
+export const DEFAULT_PART = ".part"
 
+export class FsBlobStorage {
   protected ext: string
   protected part: string
   protected writeFlags: string
@@ -55,8 +56,8 @@ export class FsBlobStorage {
   protected fsPromises: FsPromises
 
   constructor(options: FsBlobStorageOptions = {}) {
-    this.ext = options.ext !== undefined ? options.ext : FsBlobStorage.DEFAULT_EXT
-    this.part = options.part !== undefined ? options.part : FsBlobStorage.DEFAULT_PART
+    this.ext = options.ext !== undefined ? options.ext : DEFAULT_EXT
+    this.part = options.part !== undefined ? options.part : DEFAULT_PART
     this.writeFlags = options.exclusive ? "wx" : "w"
     this.fs = options.fs || fs
     this.path = options.path || "."

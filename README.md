@@ -44,7 +44,7 @@ _Typescript:_
 ```ts
 import FsBlobStorage from "fs-blob-storage"
 // or
-import {FsBlobStorage} from "fs-blob-storage"
+import {FsBlobStorage, DEFAULT_EXT, DEFAULT_PART} from "fs-blob-storage"
 ```
 
 ### DEFAULT_EXT

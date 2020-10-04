@@ -146,7 +146,11 @@ export function mkdir(
     callback = options
   } else if (typeof options === "object") {
     const makeDirectoryOptions = options as fs.MakeDirectoryOptions
-    mode = makeDirectoryOptions.mode || 0o777
+    if (typeof makeDirectoryOptions.mode === "number") {
+      mode = makeDirectoryOptions.mode || 0o777
+    } else {
+      mode = parseInt(makeDirectoryOptions.mode!, 8) || 0o777
+    }
     recursive = makeDirectoryOptions.recursive || false
   }
   if (recursive) {

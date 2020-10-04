@@ -2,7 +2,9 @@
 
 ## v3.0.0 YYYY-mm-dd
 
+- `DEFAULT_EXT` and `DEFAULT_PART` are constant strings.
 - Correct typings for updates @types/node.
+- Converted from tslint to eslint.
 
 ## v2.1.4 2019-10-08
 

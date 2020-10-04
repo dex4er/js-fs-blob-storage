@@ -1,18 +1,19 @@
+import {WriteStream} from "fs"
+import path from "path"
+import {Writable} from "stream"
+
 import chai, {expect} from "chai"
 
 import dirtyChai from "dirty-chai"
 chai.use(dirtyChai)
 
-import {After, And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
-
-import {WriteStream} from "fs"
-import path from "path"
 import {PromiseWritable} from "promise-writable"
-import {Writable} from "stream"
 
 import FsBlobStorage from "../src/fs-blob-storage"
 
 import mockFs from "./lib/mock-fs"
+
+import {After, And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
 
 const STORAGEDIR = "/tmp/storage"
 

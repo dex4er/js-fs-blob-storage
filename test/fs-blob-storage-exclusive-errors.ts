@@ -1,10 +1,10 @@
 import {expect} from "chai"
 
-import {Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
-
 import {FsBlobStorage} from "../src/fs-blob-storage"
 
 import {mockFs} from "./lib/mock-fs"
+
+import {Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
 
 const STORAGEDIR = "/tmp/storage"
 

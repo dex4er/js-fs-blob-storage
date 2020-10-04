@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-const {FsBlobStorage} = require("../lib/fs-blob-storage")
-
 require("stream.pipeline-shim/auto")
 
 const stream = require("stream")
 const util = require("util")
+
+const {FsBlobStorage} = require("../lib/fs-blob-storage")
 
 const pipelinePromise = util.promisify(stream.pipeline)
 

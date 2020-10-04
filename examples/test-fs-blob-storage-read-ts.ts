@@ -2,12 +2,12 @@
 
 /// <reference lib="es2017" />
 
-import {FsBlobStorage} from "../src/fs-blob-storage"
-
 import "stream.pipeline-shim/auto"
 
 import stream from "stream"
 import util from "util"
+
+import {FsBlobStorage} from "../src/fs-blob-storage"
 
 const pipelinePromise = util.promisify(stream.pipeline)
 

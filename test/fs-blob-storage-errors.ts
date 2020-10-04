@@ -39,9 +39,7 @@ Feature("Test FsBlobStorage errors", () => {
     })
 
     Then("error is caught", () => {
-      expect(error)
-        .to.be.an("error")
-        .and.have.property("code", "ENOENT")
+      expect(error).to.be.an("error").and.have.property("code", "ENOENT")
     })
   })
 
@@ -68,9 +66,7 @@ Feature("Test FsBlobStorage errors", () => {
     })
 
     Then("error is caught", () => {
-      expect(error)
-        .to.be.an("error")
-        .and.have.property("code", "ENOENT")
+      expect(error).to.be.an("error").and.have.property("code", "ENOENT")
     })
   })
 
@@ -97,9 +93,7 @@ Feature("Test FsBlobStorage errors", () => {
     })
 
     Then("error is caught", () => {
-      expect(error)
-        .to.be.an("error")
-        .and.have.property("code", "ENOENT")
+      expect(error).to.be.an("error").and.have.property("code", "ENOENT")
     })
   })
 
@@ -126,9 +120,7 @@ Feature("Test FsBlobStorage errors", () => {
     })
 
     Then("error is caught", () => {
-      expect(error)
-        .to.be.an("error")
-        .and.have.property("code", "ENOENT")
+      expect(error).to.be.an("error").and.have.property("code", "ENOENT")
     })
   })
 })

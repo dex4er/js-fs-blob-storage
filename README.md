@@ -19,7 +19,7 @@ Features:
 
 ## Requirements
 
-This module requires Node >= 8.
+This module requires Node >= 10.
 
 ## Installation
 
@@ -36,7 +36,7 @@ npm install -D @types/node
 ## Usage
 
 ```js
-const {FsBlobStorage} = require("fs-blob-storage")
+const {FsBlobStorage, DEFAULT_EXT, DEFAULT_PART} = require("fs-blob-storage")
 ```
 
 _Typescript:_

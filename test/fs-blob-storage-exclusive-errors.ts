@@ -43,9 +43,7 @@ Feature("Test FsBlobStorage errors for exclusive option", () => {
     })
 
     Then("error is caught", () => {
-      expect(error)
-        .to.be.an("error")
-        .and.have.property("code", "EEXIST")
+      expect(error).to.be.an("error").and.have.property("code", "EEXIST")
     })
   })
 
@@ -76,9 +74,7 @@ Feature("Test FsBlobStorage errors for exclusive option", () => {
     })
 
     Then("error is caught", () => {
-      expect(error)
-        .to.be.an("error")
-        .and.have.property("code", "EEXIST")
+      expect(error).to.be.an("error").and.have.property("code", "EEXIST")
     })
   })
 })

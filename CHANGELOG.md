@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.0 YYYY-mm-dd
+
+- Correct typings for updates @types/node.
+
 ## v2.1.4 2019-10-08
 
 - Bugfix `mocha-steps` wrapper for testing.

@@ -154,6 +154,6 @@ VirtualBox. In this case no partial files should be used.
 
 ## License
 
-Copyright (c) 2018-2019 Piotr Roszatycki <piotr.roszatycki@gmail.com>
+Copyright (c) 2018-2020 Piotr Roszatycki <piotr.roszatycki@gmail.com>
 
 [MIT](https://opensource.org/licenses/MIT)

@@ -1,6 +1,6 @@
 # Changelog
 
-## v3.0.0 YYYY-mm-dd
+## v3.0.0 2020-10-05
 
 - `DEFAULT_EXT` and `DEFAULT_PART` are constant strings.
 - Requires Node >= 10.

@@ -1,6 +1,6 @@
 {
   "name": "fs-blob-storage",
-  "version": "2.1.4",
+  "version": "3.0.0",
   "description": "Blob storage on filesystem, with streams and promises API",
   "main": "lib/fs-blob-storage.js",
   "typings": "lib/fs-blob-storage.d.ts",

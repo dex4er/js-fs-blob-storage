@@ -17,12 +17,12 @@ export interface FsBlobStorageOptions {
 export interface FsBlobStorageWriteStreamOptions {
   ext?: string
   part?: string
-  encoding?: string
+  encoding?: BufferEncoding
 }
 
 export interface FsBlobStorageReadStreamOptions {
   ext?: string
-  encoding?: string
+  encoding?: BufferEncoding
 }
 
 export interface FsBlobStorageCommitOptions {

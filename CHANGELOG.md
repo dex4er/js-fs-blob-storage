@@ -5,6 +5,7 @@
 - `DEFAULT_EXT` and `DEFAULT_PART` are constant strings.
 - Requires Node >= 10.
 - Correct typings for updates @types/node.
+- Uses fs.mkdir-shim@2.
 - Converted from tslint to eslint.
 
 ## v2.1.4 2019-10-08

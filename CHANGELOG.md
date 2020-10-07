@@ -1,11 +1,15 @@
 # Changelog
 
+## v3.1.0 2020-10-07
+
+- Correct typings for @types/node@v14.
+- Uses fs.mkdir-shim@2.
+
 ## v3.0.0 2020-10-05
 
 - `DEFAULT_EXT` and `DEFAULT_PART` are constant strings.
 - Requires Node >= 10.
-- Correct typings for @types/node@v14.
-- Uses fs.mkdir-shim@2.
+- Correct typings for updates @types/node.
 - Converted from tslint to eslint.
 
 ## v2.1.4 2019-10-08

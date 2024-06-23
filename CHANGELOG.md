@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.1.0 2024-06-24
+
+- Refactoring: uses `fs.promises` API.
+
 ## v4.0.0 2024-06-23
 
 - Converted to ESM module.

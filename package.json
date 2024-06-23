@@ -1,6 +1,6 @@
 {
   "name": "fs-blob-storage",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Blob storage on filesystem, with streams and promises API",
   "type": "module",
   "exports": {

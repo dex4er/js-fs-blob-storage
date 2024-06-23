@@ -2,7 +2,7 @@ import {expect} from "chai"
 
 import {FsBlobStorage} from "../src/fs-blob-storage.js"
 
-import {mockFs} from "./lib/mock-fs.js"
+import mockFs from "./lib/mock-fs.js"
 
 import {Before, Feature, Given, Scenario, Then, When} from "./lib/steps.js"
 

@@ -2,7 +2,6 @@
 
 import * as fs from "node:fs"
 import * as path from "node:path"
-import * as util from "node:util"
 
 export interface FsBlobStorageOptions {
   ext?: string
@@ -32,15 +31,6 @@ export interface FsBlobStorageRemoveOptions {
   ext?: string
 }
 
-interface FsPromises {
-  close: typeof fs.close.__promisify__
-  mkdir: typeof fs.mkdir.__promisify__
-  open: typeof fs.open.__promisify__
-  rename: typeof fs.rename.__promisify__
-  stat: typeof fs.stat.__promisify__
-  unlink: typeof fs.unlink.__promisify__
-}
-
 export const DEFAULT_EXT = ""
 export const DEFAULT_PART = ".part"
 
@@ -51,19 +41,12 @@ export class FsBlobStorage {
   protected fs: typeof fs
   protected path: string
 
-  protected fsPromises: FsPromises
-
   constructor(options: FsBlobStorageOptions = {}) {
     this.ext = options.ext !== undefined ? options.ext : DEFAULT_EXT
     this.part = options.part !== undefined ? options.part : DEFAULT_PART
     this.writeFlags = options.exclusive ? "wx" : "w"
     this.fs = options.fs || fs
     this.path = options.path || "."
-
-    this.fsPromises = {} as FsPromises
-    for (const method of ["close", "mkdir", "open", "rename", "stat", "unlink"] as Array<keyof FsPromises>) {
-      this.fsPromises[method] = util.promisify(this.fs[method]) as any
-    }
   }
 
   async createWriteStream(key: string, options: FsBlobStorageWriteStreamOptions = {}): Promise<fs.WriteStream> {
@@ -71,20 +54,20 @@ export class FsBlobStorage {
     const filepath = path.join(this.path, key + ext)
     const dirpath = path.dirname(filepath)
 
-    await this.fsPromises.mkdir(dirpath, {recursive: true})
+    await this.fs.promises.mkdir(dirpath, {recursive: true})
 
     // for exclusive mode it will reject if file already exist
-    const fd = await this.fsPromises.open(filepath, this.writeFlags)
+    const fd = await this.fs.promises.open(filepath, this.writeFlags)
 
     if (part) {
       // do `open` instead of `stat` to prevent race condition
-      const fdPart = await this.fsPromises.open(filepath + part, this.writeFlags)
+      const fdPart = await this.fs.promises.open(filepath + part, this.writeFlags)
 
       // `close` before `rename` just for Windows
-      await this.fsPromises.close(fdPart)
+      await fdPart.close()
 
       // `rename` overwrites quietly the file
-      await this.fsPromises.rename(filepath, filepath + part)
+      await this.fs.promises.rename(filepath, filepath + part)
     }
 
     // first argument is ignored
@@ -95,9 +78,9 @@ export class FsBlobStorage {
     const {ext = this.ext, encoding} = options
     const filepath = path.join(this.path, key + ext)
 
-    const fd = await this.fsPromises.open(filepath, "r")
+    const fd = await this.fs.promises.open(filepath, "r")
 
-    const stats = await this.fsPromises.stat(filepath)
+    const stats = await this.fs.promises.stat(filepath)
 
     if (!stats.size) {
       throw Object.assign(new Error(`ENOENT: empty file, open '${filepath}'`), {
@@ -113,14 +96,14 @@ export class FsBlobStorage {
     const {ext = this.ext, part = this.part} = options
     if (part) {
       const filepath = path.join(this.path, key + ext)
-      return this.fsPromises.rename(filepath + part, filepath)
+      return this.fs.promises.rename(filepath + part, filepath)
     }
   }
 
   async remove(key: string, options: FsBlobStorageRemoveOptions = {}): Promise<void> {
     const {ext = this.ext} = options
     const filepath = path.join(this.path, key + ext)
-    return this.fsPromises.unlink(filepath)
+    return this.fs.promises.unlink(filepath)
   }
 }
 

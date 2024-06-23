@@ -1,10 +1,8 @@
 /// <reference types="node" />
 
-import fs from "fs"
-import path from "path"
-import util from "util"
-
-import mkdir from "fs.mkdir-shim"
+import * as fs from "node:fs"
+import * as path from "node:path"
+import * as util from "node:util"
 
 export interface FsBlobStorageOptions {
   ext?: string
@@ -63,8 +61,7 @@ export class FsBlobStorage {
     this.path = options.path || "."
 
     this.fsPromises = {} as FsPromises
-    this.fsPromises.mkdir = util.promisify(mkdir)
-    for (const method of ["close", "open", "rename", "stat", "unlink"] as Array<keyof FsPromises>) {
+    for (const method of ["close", "mkdir", "open", "rename", "stat", "unlink"] as Array<keyof FsPromises>) {
       this.fsPromises[method] = util.promisify(this.fs[method]) as any
     }
   }

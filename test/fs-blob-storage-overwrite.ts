@@ -1,19 +1,16 @@
-import {WriteStream} from "fs"
-import path from "path"
-import {Writable} from "stream"
+import {WriteStream} from "node:fs"
+import path from "node:path"
+import {Writable} from "node:stream"
 
-import chai, {expect} from "chai"
-
-import dirtyChai from "dirty-chai"
-chai.use(dirtyChai)
+import {expect} from "chai"
 
 import {PromiseWritable} from "promise-writable"
 
-import FsBlobStorage from "../src/fs-blob-storage"
+import FsBlobStorage from "../src/fs-blob-storage.js"
 
-import mockFs from "./lib/mock-fs"
+import mockFs from "./lib/mock-fs.js"
 
-import {After, And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
+import {After, And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps.js"
 
 const STORAGEDIR = "/tmp/storage"
 
@@ -52,7 +49,7 @@ Feature("Test FsBlobStorage overwrite", () => {
     })
 
     And(".part file should be created", () => {
-      expect(mockFs.existsSync(realFilename)).to.be.true()
+      expect(mockFs.existsSync(realFilename)).to.be.true
     })
 
     When("I write to the Writable stream", async () => {
@@ -97,7 +94,7 @@ Feature("Test FsBlobStorage overwrite", () => {
     })
 
     And(".part file should be created", () => {
-      expect(mockFs.existsSync(realFilename)).to.be.true()
+      expect(mockFs.existsSync(realFilename)).to.be.true
     })
 
     When("I write to the Writable stream", async () => {
@@ -136,7 +133,7 @@ Feature("Test FsBlobStorage overwrite", () => {
     })
 
     Then("rs.part should be renamed to rs", () => {
-      expect(mockFs.existsSync(realFilename)).to.be.true()
+      expect(mockFs.existsSync(realFilename)).to.be.true
     })
   })
 })

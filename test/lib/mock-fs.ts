@@ -1,6 +1,3 @@
-// tslint:disable:max-classes-per-file
-// tslint:disable:typedef
-
 import fs from "fs"
 import makeDir from "make-dir"
 import path from "path"
@@ -31,7 +28,10 @@ function TRACE(...args: any[]): void {
 export class MockFsReadable extends Readable {
   private offset = 0
 
-  constructor(private fd: number, options: any) {
+  constructor(
+    private fd: number,
+    options: any,
+  ) {
     super(options)
   }
 
@@ -53,7 +53,10 @@ export class MockFsReadable extends Readable {
 }
 
 export class MockFsWritable extends Writable {
-  constructor(private fd: number, options: any) {
+  constructor(
+    private fd: number,
+    options: any,
+  ) {
     super(options)
   }
 

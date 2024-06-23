@@ -1,25 +1,21 @@
-import {ReadStream, WriteStream} from "fs"
-import path from "path"
-import {Readable, Writable} from "stream"
+import {ReadStream, WriteStream} from "node:fs"
+import path from "node:path"
+import {Readable, Writable} from "node:stream"
 
-import chai, {expect} from "chai"
-
-import dirtyChai from "dirty-chai"
-chai.use(dirtyChai)
+import {expect} from "chai"
 
 import {PromiseReadable} from "promise-readable"
 import {PromiseWritable} from "promise-writable"
 
-import FsBlobStorage from "../src/fs-blob-storage"
+import FsBlobStorage from "../src/fs-blob-storage.js"
 
-import mockFs from "./lib/mock-fs"
+import mockFs from "./lib/mock-fs.js"
 
-import {After, And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps"
+import {After, And, Before, Feature, Given, Scenario, Then, When} from "./lib/steps.js"
 
 const STORAGEDIR = "/tmp/storage"
 
 Feature("Test FsBlobStorage with empty part options", () => {
-  // tslint:disable:object-literal-key-quotes
   const fakeFilesystem = {
     [STORAGEDIR]: {
       commit: "another file content here",
@@ -54,7 +50,7 @@ Feature("Test FsBlobStorage with empty part options", () => {
     })
 
     And(".part file should no be created", () => {
-      expect(mockFs.existsSync(realFilenamePart)).to.be.false()
+      expect(mockFs.existsSync(realFilenamePart)).to.be.false
     })
 
     When("I write to the Writable stream", async () => {
@@ -128,7 +124,7 @@ Feature("Test FsBlobStorage with empty part options", () => {
     })
 
     Then("rs should exists", () => {
-      expect(mockFs.existsSync(realFilename)).to.be.true()
+      expect(mockFs.existsSync(realFilename)).to.be.true
     })
   })
 
@@ -151,7 +147,7 @@ Feature("Test FsBlobStorage with empty part options", () => {
     })
 
     Then("remove should be removed", () => {
-      expect(mockFs.existsSync(realFilename)).to.be.false()
+      expect(mockFs.existsSync(realFilename)).to.be.false
     })
   })
 })

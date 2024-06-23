@@ -29,3 +29,5 @@ ts-node-*
 .DS_Store
 /.idea
 /.vscode
+
+/spool

@@ -1,5 +1,10 @@
 # Changelog
 
+## v4.0.0 2024-06-22
+
+- Converted to ESM module.
+- Requires Node >= 16.
+
 ## v3.1.0 2020-10-07
 
 - Correct typings for @types/node@v14.

@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 
-require("stream.pipeline-shim/auto")
+import * as stream from "node:stream"
+import * as util from "node:util"
 
-const stream = require("stream")
-const util = require("util")
-
-const {FsBlobStorage} = require("../lib/fs-blob-storage")
+import {FsBlobStorage} from "../lib/fs-blob-storage.js"
 
 const pipelinePromise = util.promisify(stream.pipeline)
 
-const SPOOLDIR = process.env.SPOOLDIR || "."
+const SPOOLDIR = process.env.SPOOLDIR || "spool"
 const DEBUG = Boolean(process.env.DEBUG)
 
 async function main() {
@@ -18,7 +16,7 @@ async function main() {
   const key = process.argv[2]
 
   if (!key) {
-    console.error(`Usage: ${process.argv[1]} key`)
+    console.error(`Usage: ${process.argv[1]} key < content`)
     process.exit(1)
   }
 
